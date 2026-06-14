@@ -1,0 +1,2176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roland D-50 Editor</title>
+  <style>
+    @font-face {
+      font-family: 'TR909';
+      src: url('data:font/truetype;base64,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Hh54/bwCMBQU/dACMP5IAbgUAhxkZB4UFB6MZAFUFDwUyIwUZBQAAAABADwAAAL4AhwADwAfuAAUK7oABQAMABcrALoACAAJABcrugAAAAEAFyswMQEVISIVERQzIRUhIjURNDMC+P3QFBQCMP28eHgCHGQU/tQUZGQBVGQAAAAAAQA8AAAC+AIcABEAV7gAFCu4ABIvuAAOL7gAEhC4AAjQuAAIL7gAANC4AA4QuAAB0LgADhC4AAPcuAAOELgABtC4AAgQuAAJ3LgAAxC4ABPcALoACwAGABcrugABABAAFyswMRMhMhURFCMhETMVITI1ETQjITwCRHh4/bx4AbgUFP3QAhxk/qxkAVTwFAEsFAAAAAEAPAAAAvgCHAATAC+4ABQrugAJABAAFyu4AAkQuAAE0AC6AAwADQAXK7oAAAABABcrugAGAAcAFyswMQEVISIdASEVIRUUMyEVISI1ETQzAvj90BQCRP28FAIw/bx4eAIcZBRQZHgUZGQBVGQAAAABADwAAAL4AhwADQAruAAUK7oACQAKABcruAAJELgABNAAuAAJL7oAAAABABcrugAGAAcAFyswMQEVISIdASEVIRUjETQzAvj90BQCRP28eHgCHGQUUGTwAbhkAAEAPAAAAvgCHAAVAF+4ABQruAAWL7gACC+4AA3cuAAA0LgAFhC4ABLQuAASL7gABdy4AAgQuAAP0LgABRC4ABDQuAAFELgAFdC4AA0QuAAX3AC6AAgADwAXK7oAAAABABcrugAMAAkAFyswMQEVISIVERQzITUjNSEVFCMhIjURNDMC+P3QFBQBuOYBXnj+NHh4AhxkFP7UFIxk8GRkAVRkAAAAAQA8AAAC+AIcAAsAU7gAFCu4AAwvuAADL7gADBC4AArQuAAKL7gACdy4AADQuAADELgABNy4AAMQuAAG0LgABBC4AA3cALgAAC+4AAMvuAAFL7gACS+6AAIABwAXKzAxExUhNTMRIzUhFSMRtAHMeHj+NHgCHMjI/eTw8AIcAAABACgAAACgAhwAAwAfuAAUK7oAAQACABcruAABELgABdwAuAABL7gAAC8wMRMRIxGgeAIc/eQCHAAAAAABACgAAALkAhwACQAjuAAUK7oAAQAAABcruAABELgAC9wAuAAAL7oABwAEABcrMDEBMxEUIyEnITI1Amx4eP40eAIw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UmVndWxhcjEuMFRSLTkwOQAoAEMAKQAgADIAMAAwADAAIABUAGEAawBhAHQAbwBzAGgAaQAgACIAdABhAGsAawBlAHIAIgAgACAAawBhAHQAbwBoAFIAZQBnAHUAbABhAHIAVABSAC0AOQAwADkAMQAuADAAAgAAAAAAAP+gADAAAAAAAAAAAAAAAAAAAAAAAAAAAADdAAABAgADAAQABQAGAAcBAwAJAAoACwAMAA0ADgAPABAAEQASABMAFAAVABYAFwAYABkAGgAbABwAHQAeAB8AIAAhACIAIwAkACUAJgAnACgAKQAqACsALAAtAC4ALwAwADEAMgAzADQANQA2ADcAOAA5ADoAOwA8AD0APgA/AEAAQQBCAEMARABFAEYARwBIAEkASgBLAEwATQBOAE8AUABRAFIAUwBUAFUAVgBXAFgAWQBaAFsAXABdAF4AXwBgAGEArACjAIQAhQC9AJYA6ACGAI4AiwCdAKkApAEEAIoA2gCDAJMA8gDzAI0AlwCIAMMA3gDxAJ4AqgD1APQA9gCiAK0AyQDHAK4AYgBjAJAAZADLAGUAyADKAM8AzADNAM4A6QBmANMA0ADRAK8AZwDwAJEA1gDUANUAaADrAO0AiQBqAGkAawBtAGwAbgCgAG8AcQBwAHIAcwB1AHQAdgB3AOoAeAB6AHkAewB9AHwAuAChAH8AfgCAAIEA7ADuALoAsACxAOQA5QC7AOYA5wCmANgA2QCyALMAtgC3AMQAtAC1AMUAggDCAIcAqwDGAL4AvwEFAIwBBgROVUxMB3VuaTAwMjUHdW5pMDBBRARFdXJvB3VuaTIyMTkAAAAAAAIAGAAB//8AAw==') format('truetype');
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #111; --bg2: #1a1a1a; --bg3: #222;
+      --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.15);
+      --text: #ffffff; --text2: #e3e3e3; --text3: #b0b0b0;
+      --accent: #9fc5e8; --accent2: #6a9bbf;
+      --green: #4a8; --red: #a44; --blue: #4af;
+      --font-mono: 'Courier New', Courier, monospace;
+      --fs: 11px; --fsl: 12px;
+    }
+
+    html, body { height: 100%; overflow-x: hidden; overflow-y: auto; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: var(--fs);
+      display: flex;
+      flex-direction: column;
+      padding: 6px 10px;
+      gap: 4px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 5px;
+      border-bottom: 0.5px solid var(--border2);
+      flex-shrink: 0;
+    }
+    .logo-area { display: flex; align-items: baseline; gap: 8px; }
+    .logo-area .brand { font-size: 20px; letter-spacing: 0.2em; color: var(--text3); text-transform: uppercase; font-family: 'TR909', var(--font-mono); }
+    .logo-area .model { font-size: 28px; font-weight: 700; color: var(--accent); letter-spacing: 0.06em; font-family: 'TR909', var(--font-mono); }
+    .logo-area .subtitle { font-size: 19px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.12em; font-family: 'TR909', var(--font-mono); }
+    .midi-status { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+    .status-row { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text2); }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); transition: background 0.3s; flex-shrink: 0; }
+    .dot.connected { background: var(--green); box-shadow: 0 0 5px var(--green); }
+    .dot.error { background: var(--red); }
+    .device-select {
+      background: var(--bg3); border: 0.5px solid var(--border2); color: var(--text);
+      font-family: var(--font-mono); font-size: 10px; padding: 3px 6px;
+      border-radius: 3px; cursor: pointer; max-width: 180px;
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em;
+      cursor: pointer; padding: 4px 10px; border-radius: 3px;
+      border: 0.5px solid var(--border2); background: var(--bg3);
+      color: var(--text2); transition: all 0.15s; text-transform: lowercase; white-space: nowrap;
+    }
+    .btn:hover { border-color: var(--accent2); color: var(--accent); }
+    .btn.primary { border-color: var(--accent2); color: var(--accent); }
+    .btn.primary:hover { background: rgba(200,169,110,0.1); }
+
+    /* ── TABS ── */
+    .tab {
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em;
+      padding: 3px 10px; cursor: pointer; border-radius: 3px;
+      border: 0.5px solid var(--border); background: transparent;
+      color: var(--text3); transition: all 0.15s; text-transform: lowercase; white-space: nowrap;
+    }
+    .tab:hover { border-color: var(--border2); color: var(--text2); }
+    .tab.active { border-color: var(--accent2); color: var(--accent); background: rgba(200,169,110,0.08); }
+
+    /* ── SECTION ── */
+    .section {
+      background: var(--bg2); border: 0.5px solid var(--border);
+      border-radius: 5px; padding: 5px 8px;
+    }
+    .section-title {
+      font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--text3); margin-bottom: 5px; padding-bottom: 3px;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .section-disabled { opacity: 0.25; pointer-events: none; }
+
+    /* ── PARAM ROWS ── */
+    .param-row { display: flex; align-items: center; gap: 5px; margin-bottom: 3px; }
+    .param-label { font-size: 13px; color: var(--text2); min-width: 70px; white-space: nowrap; }
+    .param-val { font-size: 13px; font-weight: bold; color: var(--accent); min-width: 24px; text-align: right; }
+
+    input[type=range] {
+      -webkit-appearance: none; flex: 1; height: 2px;
+      background: var(--border2); border-radius: 2px; outline: none; cursor: pointer; min-width: 40px;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 11px; height: 11px; border-radius: 50%;
+      background: var(--accent); cursor: pointer; transition: transform 0.1s;
+    }
+    input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+    input[type=range]::-moz-range-thumb {
+      width: 11px; height: 11px; border-radius: 50%;
+      background: var(--accent); border: none; cursor: pointer;
+    }
+
+    /* ── WAVE / STR BUTTONS ── */
+    .wave-toggle { display: flex; gap: 3px; flex: 1; }
+    .wave-btn {
+      font-family: var(--font-mono); font-size: 10px; font-weight: bold;
+      cursor: pointer; padding: 3px 8px; border-radius: 3px;
+      border: 0.5px solid var(--border2); background: transparent;
+      color: var(--text3); transition: all 0.15s;
+    }
+    .wave-btn:hover { border-color: var(--accent2); color: var(--text2); }
+    .wave-btn.active { border-color: var(--accent2); color: var(--accent); background: rgba(200,169,110,0.12); }
+
+    .str-btn {
+      font-family: var(--font-mono); font-size: 11px; font-weight: bold;
+      cursor: pointer; width: 24px; height: 24px; border-radius: 3px;
+      border: 0.5px solid var(--border2); background: transparent;
+      color: var(--text3); transition: all 0.15s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .str-btn:hover { border-color: var(--accent2); color: var(--text2); }
+    .str-btn.active { border-color: var(--accent2); color: var(--accent); background: rgba(200,169,110,0.12); }
+
+    /* ── MUTE BUTTONS ── */
+    .mute-btn {
+      font-family: var(--font-mono); font-size: 10px; cursor: pointer;
+      padding: 3px 8px; border-radius: 3px; border: 0.5px solid var(--border2);
+      background: var(--bg3); color: var(--text2); transition: all 0.15s;
+      text-transform: lowercase; display: flex; align-items: center; gap: 5px; white-space: nowrap;
+    }
+    .mute-btn .mute-led {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green); box-shadow: 0 0 4px var(--green); flex-shrink: 0;
+    }
+    .mute-btn.muted { border-color: var(--red); color: var(--red); }
+    .mute-btn.muted .mute-led { background: var(--red); box-shadow: 0 0 4px var(--red); }
+
+    /* ── STRUCTURE ── */
+    .structure-label { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+    .structure-btns { display: flex; gap: 3px; }
+    .structure-desc { font-size: 9px; color: var(--text2); }
+
+    /* ── PCM ROW ── */
+    .pcm-row {
+      display: flex; background: var(--bg2); border: 0.5px solid #4af4;
+      border-radius: 5px; padding: 5px 7px;
+      flex-direction: column;
+      opacity: 0.25; pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .pcm-row.visible { opacity: 1; pointer-events: auto; }
+    .pcm-select {
+      background: var(--bg3); border: 0.5px solid #4af5; color: var(--text);
+      font-family: var(--font-mono); font-size: 10px; padding: 3px 6px;
+      border-radius: 3px; cursor: pointer; width: 100%;
+    }
+
+    /* ── CHORUS TYPE BTNS ── */
+    .chorus-btns { display: flex; gap: 3px; flex-wrap: wrap; }
+
+    /* ── SYSEX LOG ── */
+    .log-section {
+      background: var(--bg2); border: 0.5px solid var(--border);
+      border-radius: 5px; padding: 4px 8px; flex-shrink: 0;
+    }
+    .log-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px; }
+    .log-title { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text3); }
+    .sysex-log {
+      background: var(--bg); border: 0.5px solid var(--border); border-radius: 3px;
+      padding: 4px 6px; font-size: 10px; color: var(--text2); height: 44px;
+      overflow-y: auto; line-height: 1.6;
+    }
+    .sysex-log::-webkit-scrollbar { width: 3px; }
+    .sysex-log::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+    .sysex-entry { margin-bottom: 1px; }
+    .sysex-entry .param-name { color: var(--blue); }
+    .sysex-entry .sent { color: var(--green); font-size: 9px; margin-left: 6px; }
+    .sysex-entry .nosend { color: var(--text3); font-size: 9px; margin-left: 6px; }
+    .empty-log { color: var(--text3); font-style: italic; }
+
+    /* ── FOOTER ── */
+    .footer { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
+    .footer-note { font-size: 9px; color: var(--text3); margin-left: auto; }
+
+    select option { background: var(--bg3); }
+
+    /* ── MAIN LAYOUT ── */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 148px 1fr;
+      gap: 4px;
+    }
+
+    /* Left panel: tabs + mute + structure */
+    .left-panel {
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .partial-tabs { display: flex; flex-direction: column; gap: 2px; }
+    .mute-row { display: flex; flex-direction: column; gap: 2px; }
+    .structure-block {
+      background: var(--bg2); border: 0.5px solid var(--border);
+      border-radius: 5px; padding: 5px 7px;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+
+    /* Right panel: partial params */
+    .right-panel {
+      display: flex; flex-direction: column; gap: 4px;
+    }
+
+    /* Row of sections inside right panel */
+    .params-row { display: flex; gap: 4px; }
+    .params-row .section { flex: 1; min-width: 0; }
+
+    /* Envelope canvas */
+    .env-canvas {
+      width: 100%; height: 110px; cursor: crosshair;
+      background: var(--bg); border-radius: 4px;
+      border: 0.5px solid var(--border); display: block;
+    }
+
+    /* Tone section */
+    .tone-layout {
+      display: grid; grid-template-columns: 148px 1fr; gap: 4px; flex-shrink: 0;
+    }
+    .tone-left { display: flex; flex-direction: column; gap: 4px; width: 148px; flex-shrink: 0; }
+    .tone-right { display: flex; gap: 4px; flex: 1; min-width: 0; }
+
+    /* Patch section */
+    .patch-layout { display: flex; gap: 4px; flex-shrink: 0; }
+    .patch-layout .section { flex: 1; min-width: 0; }
+
+    /* Name input */
+    .tone-name-input {
+      font-family: var(--font-mono); font-size: 13px; background: var(--bg3);
+      border: 0.5px solid var(--border2); color: var(--accent);
+      padding: 3px 6px; border-radius: 3px; width: 100%; letter-spacing: 0.08em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-area">
+      <span class="brand">Javhastudios</span>
+      <span class="model">D-50</span>
+      <span class="subtitle">SysEx Editor</span>
+    </div>
+    <div class="midi-status">
+      <div class="status-row">
+        <div class="dot" id="dot"></div>
+        <span id="midi-label">sin conexión midi</span>
+      </div>
+      <select class="device-select" id="device-select">
+        <option value="">– conectar primero –</option>
+      </select>
+      <button class="btn primary" onclick="connectMIDI()">conectar midi</button>
+    </div>
+  </div>
+
+  <!-- MAIN LAYOUT -->
+  <div class="main-layout">
+
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+      <div class="partial-tabs">
+        <button class="tab active" onclick="selectPartial(0, this)">upper partial 1</button>
+        <button class="tab" onclick="selectPartial(1, this)">upper partial 2</button>
+        <button class="tab" onclick="selectPartial(2, this)">lower partial 1</button>
+        <button class="tab" onclick="selectPartial(3, this)">lower partial 2</button>
+      </div>
+      <div class="mute-row">
+        <button class="mute-btn" id="mute-btn-0" onclick="toggleMute(0)"><span class="mute-led"></span>up1</button>
+        <button class="mute-btn" id="mute-btn-1" onclick="toggleMute(1)"><span class="mute-led"></span>up2</button>
+        <button class="mute-btn" id="mute-btn-2" onclick="toggleMute(2)"><span class="mute-led"></span>lp1</button>
+        <button class="mute-btn" id="mute-btn-3" onclick="toggleMute(3)"><span class="mute-led"></span>lp2</button>
+      </div>
+      <div class="structure-block">
+        <span class="structure-label">upper — estructura</span>
+        <div class="structure-btns" id="str-upper">
+          <button class="str-btn active" onclick="setStructure('upper',0)">1</button>
+          <button class="str-btn" onclick="setStructure('upper',1)">2</button>
+          <button class="str-btn" onclick="setStructure('upper',2)">3</button>
+          <button class="str-btn" onclick="setStructure('upper',3)">4</button>
+          <button class="str-btn" onclick="setStructure('upper',4)">5</button>
+          <button class="str-btn" onclick="setStructure('upper',5)">6</button>
+          <button class="str-btn" onclick="setStructure('upper',6)">7</button>
+        </div>
+        <div class="structure-diagram" id="str-upper-diagram"></div>
+        <span class="structure-desc" id="str-upper-desc">Synth + Synth</span>
+      </div>
+      <div class="structure-block">
+        <span class="structure-label">lower — estructura</span>
+        <div class="structure-btns" id="str-lower">
+          <button class="str-btn active" onclick="setStructure('lower',0)">1</button>
+          <button class="str-btn" onclick="setStructure('lower',1)">2</button>
+          <button class="str-btn" onclick="setStructure('lower',2)">3</button>
+          <button class="str-btn" onclick="setStructure('lower',3)">4</button>
+          <button class="str-btn" onclick="setStructure('lower',4)">5</button>
+          <button class="str-btn" onclick="setStructure('lower',5)">6</button>
+          <button class="str-btn" onclick="setStructure('lower',6)">7</button>
+        </div>
+        <div class="structure-diagram" id="str-lower-diagram"></div>
+        <span class="structure-desc" id="str-lower-desc">Synth + Synth</span>
+      </div>
+      <div class="pcm-row" id="pcm-row">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+          <span style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:#4af;">PCM sample</span>
+          <span style="font-size:10px;font-weight:bold;color:#4af;" id="pcm-number">1</span>
+        </div>
+        <select class="pcm-select" id="pcm-select" onchange="onPCMWave(this)" style="width:100%;">
+          <option value="0">1 — Marimba</option><option value="1">2 — Vibes</option><option value="2">3 — Xylophone 1</option><option value="3">4 — Xylophone 2</option><option value="4">5 — Log Bass</option><option value="5">6 — Hammer</option><option value="6">7 — Japanese Drum</option><option value="7">8 — Kalimba</option><option value="8">9 — Pluck 1</option><option value="9">10 — Chink</option><option value="10">11 — Agogo</option><option value="11">12 — Triangle</option><option value="12">13 — Bells</option><option value="13">14 — Nail File</option><option value="14">15 — Pick</option><option value="15">16 — Low Piano</option><option value="16">17 — Mid Piano</option><option value="17">18 — High Piano</option><option value="18">19 — Harpsichord</option><option value="19">20 — Harp</option><option value="20">21 — Organ Percussion</option><option value="21">22 — Steel String</option><option value="22">23 — Nylon String</option><option value="23">24 — Elec. Guitar 1</option><option value="24">25 — Elec. Guitar 2</option><option value="25">26 — Dirty Guitar</option><option value="26">27 — Pick Bass</option><option value="27">28 — Pop Bass</option><option value="28">29 — Thumb Bass</option><option value="29">30 — Upright Bass</option><option value="30">31 — Clarinet</option><option value="31">32 — Breath</option><option value="32">33 — Steam</option><option value="33">34 — High Flute</option><option value="34">35 — Low Flute</option><option value="35">36 — Guiro</option><option value="36">37 — Indian Flute</option><option value="37">38 — Flute Harmonic</option><option value="38">39 — Lips 1</option><option value="39">40 — Lips 2</option><option value="40">41 — Trumpet</option><option value="41">42 — Trombone</option><option value="42">43 — Contrabass</option><option value="43">44 — Cello</option><option value="44">45 — Violin Bow</option><option value="45">46 — Violins</option><option value="46">47 — Pizzicato</option><option value="47">48 — Drawbar Organ</option><option value="48">49 — High Organ</option><option value="49">50 — Low Organ</option><option value="50">51 — Elec. Piano 1</option><option value="51">52 — Elec. Piano 2</option><option value="52">53 — Clav</option><option value="53">54 — Harpsichord</option><option value="54">55 — Elec. Bass 1</option><option value="55">56 — Acoustic Bass</option><option value="56">57 — Elec. Bass 2</option><option value="57">58 — Elec. Bass 3</option><option value="58">59 — Elec. Guitar</option><option value="59">60 — Cello</option><option value="60">61 — Violin</option><option value="61">62 — Reed</option><option value="62">63 — Sax 1</option><option value="63">64 — Sax 2</option><option value="64">65 — Aah</option><option value="65">66 — Ooh</option><option value="66">67 — Male 1</option><option value="67">68 — Spectrum 1</option><option value="68">69 — Spectrum 2</option><option value="69">70 — Spectrum 3</option><option value="70">71 — Spectrum 4</option><option value="71">72 — Spectrum 5</option><option value="72">73 — Spectrum 6</option><option value="73">74 — Spectrum 7</option><option value="74">75 — Male 2</option><option value="75">76 — Noise</option><option value="76">77 — Combination 1</option><option value="77">78 — Combination 2</option><option value="78">79 — Combination 3</option><option value="79">80 — Combination 4</option><option value="80">81 — Combination 5</option><option value="81">82 — Combination 6</option><option value="82">83 — Combination 7</option><option value="83">84 — Combination 8</option><option value="84">85 — Combination 9</option><option value="85">86 — Combination 10</option><option value="86">87 — Combination 11</option><option value="87">88 — Combination 12</option><option value="88">89 — Combination 13</option><option value="89">90 — Combination 14</option><option value="90">91 — Combination 15</option><option value="91">92 — Combination 16</option><option value="92">93 — Combination 17</option><option value="93">94 — Combination 18</option><option value="94">95 — Combination 19</option><option value="95">96 — Combination 20</option><option value="96">97 — Combination 21</option><option value="97">98 — Combination 22</option><option value="98">99 — Combination 23</option><option value="99">100 — Combination 24</option>
+        </select>
+      </div>
+    </div><!-- /left-panel -->
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+
+      <!-- Row 1: TVF + TVF ENV + TVF MOD -->
+      <div class="params-row">
+        <div style="flex:0 0 208px;display:flex;flex-direction:column;gap:4px;">
+          <div class="section" id="tvf-section">
+            <div class="section-title">TVF — filtro</div>
+            <div class="param-row"><span class="param-label">cutoff freq</span><input type="range" min="0" max="100" value="80" step="1" oninput="onParam(this,'tvf-cutoff-val',0x0D)"><span class="param-val" id="tvf-cutoff-val">80</span></div>
+            <div class="param-row"><span class="param-label">resonance</span><input type="range" min="0" max="30" value="0" step="1" oninput="onParam(this,'tvf-res-val',0x0E)"><span class="param-val" id="tvf-res-val">0</span></div>
+            <div class="param-row"><span class="param-label">key follow</span><input type="range" min="0" max="14" value="7" step="1" oninput="onParam(this,'tvf-kf-val',0x0F)"><span class="param-val" id="tvf-kf-val">7</span></div>
+            <div class="param-row"><span class="param-label">bias point</span><input type="range" min="0" max="127" value="0" step="1" oninput="onParam(this,'tvf-biasp-val',0x10)"><span class="param-val" id="tvf-biasp-val">0</span></div>
+            <div class="param-row"><span class="param-label">bias level</span><input type="range" min="0" max="14" value="7" step="1" oninput="onParam(this,'tvf-biasl-val',0x11)"><span class="param-val" id="tvf-biasl-val">7</span></div>
+          </div>
+        </div>
+        <div class="section" id="tvf-env-section" style="flex:1;">
+          <div class="section-title">TVF ENV — envolvente</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 8px;margin-bottom:4px;">
+            <div class="param-row"><span class="param-label">depth</span><input type="range" min="0" max="100" value="60" step="1" oninput="onParam(this,'tvf-envd-val',0x12);envRedraw('tvf')"><span class="param-val" id="tvf-envd-val">60</span></div>
+            <div class="param-row"><span class="param-label">velo range</span><input type="range" min="0" max="100" value="0" step="1" oninput="onParam(this,'tvf-velr-val',0x13)"><span class="param-val" id="tvf-velr-val">0</span></div>
+            <div class="param-row"><span class="param-label">depth KF</span><input type="range" min="0" max="4" value="0" step="1" oninput="onParam(this,'tvf-dkf-val',0x14)"><span class="param-val" id="tvf-dkf-val">0</span></div>
+            <div class="param-row"><span class="param-label">time KF</span><input type="range" min="0" max="4" value="0" step="1" oninput="onParam(this,'tvf-tkf-val',0x15)"><span class="param-val" id="tvf-tkf-val">0</span></div>
+          </div>
+          <canvas id="tvf-env-canvas" class="env-canvas" width="600" height="110"></canvas>
+          <input type="hidden" id="tvf-t1-val" value="30"><input type="hidden" id="tvf-t2-val" value="50"><input type="hidden" id="tvf-t3-val" value="50"><input type="hidden" id="tvf-t4-val" value="50"><input type="hidden" id="tvf-t5-val" value="40"><input type="hidden" id="tvf-l1-val" value="100"><input type="hidden" id="tvf-l2-val" value="80"><input type="hidden" id="tvf-l3-val" value="60"><input type="hidden" id="tvf-susl-val" value="80"><input type="hidden" id="tvf-endl-val" value="0">
+        </div>
+        <div style="flex:0 0 193px;display:flex;flex-direction:column;gap:4px;">
+          <div class="section" id="tvf-mod-section">
+            <div class="section-title">TVF MOD</div>
+            <div class="param-row"><span class="param-label">LFO select</span><input type="range" min="0" max="5" value="0" step="1" oninput="onParam(this,'tvf-lfos-val',0x20)"><span class="param-val" id="tvf-lfos-val">0</span></div>
+            <div class="param-row"><span class="param-label">LFO depth</span><input type="range" min="0" max="100" value="0" step="1" oninput="onParam(this,'tvf-lfod-val',0x21)"><span class="param-val" id="tvf-lfod-val">0</span></div>
+            <div class="param-row"><span class="param-label">aftertouch</span><input type="range" min="0" max="14" value="7" step="1" oninput="onParam(this,'tvf-after-val',0x22)"><span class="param-val" id="tvf-after-val">7</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: TVA + TVA ENV + WG PW -->
+      <div class="params-row">
+        <div style="flex:0 0 208px;display:flex;flex-direction:column;gap:4px;">
+          <div class="section">
+            <div class="section-title">TVA — amplificador</div>
+            <div class="param-row"><span class="param-label">level</span><input type="range" min="0" max="100" value="100" step="1" oninput="onParam(this,'tva-level-val',0x23)"><span class="param-val" id="tva-level-val">100</span></div>
+            <div class="param-row"><span class="param-label">velo range</span><input type="range" min="0" max="100" value="50" step="1" oninput="onParam(this,'tva-velo-val',0x24)"><span class="param-val" id="tva-velo-val">50</span></div>
+            <div class="param-row"><span class="param-label">bias point</span><input type="range" min="0" max="127" value="0" step="1" oninput="onParam(this,'tva-biasp-val',0x25)"><span class="param-val" id="tva-biasp-val">0</span></div>
+            <div class="param-row"><span class="param-label">bias level</span><input type="range" min="0" max="12" value="0" step="1" oninput="onParam(this,'tva-biasl-val',0x26)"><span class="param-val" id="tva-biasl-val">0</span></div>
+          </div>
+          <div class="section">
+            <div class="section-title">TVA MOD</div>
+            <div class="param-row"><span class="param-label">LFO select</span><input type="range" min="0" max="5" value="0" step="1" oninput="onParam(this,'tva-lfos-val',0x33)"><span class="param-val" id="tva-lfos-val">0</span></div>
+            <div class="param-row"><span class="param-label">LFO depth</span><input type="range" min="0" max="100" value="0" step="1" oninput="onParam(this,'tva-lfod-val',0x34)"><span class="param-val" id="tva-lfod-val">0</span></div>
+            <div class="param-row"><span class="param-label">aftertouch</span><input type="range" min="0" max="14" value="7" step="1" oninput="onParam(this,'tva-after-val',0x35)"><span class="param-val" id="tva-after-val">7</span></div>
+          </div>
+        </div>
+        <div class="section" style="flex:1;">
+          <div class="section-title">TVA ENV — envolvente</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 8px;margin-bottom:4px;">
+            <div class="param-row"><span class="param-label">velo follow</span><input type="range" min="0" max="4" value="0" step="1" oninput="onParam(this,'tva-velof-val',0x31)"><span class="param-val" id="tva-velof-val">0</span></div>
+            <div class="param-row"><span class="param-label">time KF</span><input type="range" min="0" max="4" value="0" step="1" oninput="onParam(this,'tva-tkf-val',0x32)"><span class="param-val" id="tva-tkf-val">0</span></div>
+          </div>
+          <canvas id="tva-env-canvas" class="env-canvas" width="600" height="110"></canvas>
+          <input type="hidden" id="tva-t1-val" value="20"><input type="hidden" id="tva-t2-val" value="50"><input type="hidden" id="tva-t3-val" value="50"><input type="hidden" id="tva-t4-val" value="50"><input type="hidden" id="tva-t5-val" value="40"><input type="hidden" id="tva-l1-val" value="100"><input type="hidden" id="tva-l2-val" value="100"><input type="hidden" id="tva-l3-val" value="80"><input type="hidden" id="tva-susl-val" value="80"><input type="hidden" id="tva-endl-val" value="0">
+        </div>
+        <div style="flex:0 0 193px;display:flex;flex-direction:column;gap:4px;">
+          <div class="section" id="wg-pw-section">
+            <div class="section-title">WG — pulse width</div>
+            <div class="param-row"><span class="param-label">pulse width</span><input type="range" min="0" max="100" value="0" step="1" oninput="onParam(this,'wg-pw-val',0x08)"><span class="param-val" id="wg-pw-val">0</span></div>
+            <div class="param-row"><span class="param-label">velo range</span><input type="range" min="0" max="14" value="7" step="1" oninput="onParam(this,'wg-pwvelo-val',0x09)"><span class="param-val" id="wg-pwvelo-val">7</span></div>
+            <div class="param-row"><span class="param-label">LFO select</span><input type="range" min="0" max="5" value="0" step="1" oninput="onParam(this,'wg-pwlfos-val',0x0A)"><span class="param-val" id="wg-pwlfos-val">0</span></div>
+            <div class="param-row"><span class="param-label">LFO depth</span><input type="range" min="0" max="100" value="0" step="1" oninput="onParam(this,'wg-pwlfod-val',0x0B)"><span class="param-val" id="wg-pwlfod-val">0</span></div>
+            <div class="param-row"><span class="param-label">aftertouch</span><input type="range" min="0" max="14" value="7" step="1" oninput="onParam(this,'wg-pwafter-val',0x0C)"><span class="param-val" id="wg-pwafter-val">7</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: WG pitch -->
+      <div class="params-row">
+        <div class="section" style="flex:1;">
+          <div class="section-title">WG — pitch</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px 10px;">
+            <div class="param-row"><span class="param-label">coarse tune</span><input type="range" min="0" max="72" value="36" step="1" oninput="onParam(this,'wg-coarse-val',0x00)"><span class="param-val" id="wg-coarse-val">36</span></div>
+            <div class="param-row"><span class="param-label">fine tune</span><input type="range" min="0" max="100" value="50" step="1" oninput="onParam(this,'wg-fine-val',0x01)"><span class="param-val" id="wg-fine-val">50</span></div>
+            <div class="param-row"><span class="param-label">key follow</span><input type="range" min="0" max="16" value="8" step="1" oninput="onParam(this,'wg-kf-val',0x02)"><span class="param-val" id="wg-kf-val">8</span></div>
+            <div class="param-row"><span class="param-label">LFO mode</span><input type="range" min="0" max="3" value="0" step="1" oninput="onParam(this,'wg-lfomode-val',0x03)"><span class="param-val" id="wg-lfomode-val">0</span></div>
+            <div class="param-row"><span class="param-label">bend mode</span><input type="range" min="0" max="2" value="0" step="1" oninput="onParam(this,'wg-bendmode-val',0x05)"><span class="param-val" id="wg-bendmode-val">0</span></div>
+            <div class="param-row" id="wg-waveform-row"><span class="param-label">waveform</span><div class="wave-toggle"><button class="wave-btn active" id="wave-squ" onclick="setWaveform(0)">SQU</button><button class="wave-btn" id="wave-saw" onclick="setWaveform(1)">SAW</button></div></div>
+            <div class="param-row"><span class="param-label">P-ENV mode</span><div class="wave-toggle"><button class="wave-btn active" id="penvmode-off" onclick="setPenvMode(0)">OFF</button><button class="wave-btn" id="penvmode-nrm" onclick="setPenvMode(1)">NRM</button><button class="wave-btn" id="penvmode-inv" onclick="setPenvMode(2)">INV</button></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /right-panel -->
+  </div><!-- /main-layout -->
+
+  <!-- TONE SECTION -->
+  <div class="tone-layout">
+    <div class="tone-left">
+      <div style="display:flex;gap:3px;">
+        <button class="tab active" id="tone-upper-btn" onclick="selectTone('upper',this)">upper</button>
+        <button class="tab" id="tone-lower-btn" onclick="selectTone('lower',this)">lower</button>
+      </div>
+      <div class="section">
+        <div class="section-title">nombre</div>
+        <input type="text" id="tone-name-input" maxlength="10" class="tone-name-input" oninput="onToneName(this)">
+      </div>
+    </div>
+    <div class="tone-right">
+      <div style="flex:0 0 208px;display:flex;flex-direction:column;gap:4px;">
+        <div class="section">
+          <div class="section-title">Pitch Mod</div>
+          <div class="param-row"><span class="param-label">LFO depth</span><input type="range" min="0" max="100" value="0" step="1" oninput="onCommonTone(this,'pitchmod-lfod-val',0x16)"><span class="param-val" id="pitchmod-lfod-val">0</span></div>
+          <div class="param-row"><span class="param-label">lever</span><input type="range" min="0" max="100" value="0" step="1" oninput="onCommonTone(this,'pitchmod-lever-val',0x17)"><span class="param-val" id="pitchmod-lever-val">0</span></div>
+          <div class="param-row"><span class="param-label">aftertouch</span><input type="range" min="0" max="100" value="0" step="1" oninput="onCommonTone(this,'pitchmod-after-val',0x18)"><span class="param-val" id="pitchmod-after-val">0</span></div>
+        </div>
+        <div class="section">
+          <div class="section-title">tuning</div>
+          <div class="param-row"><span class="param-label">upper key shift</span><input type="range" min="0" max="48" value="24" step="1" oninput="onPatch(this,'patch-uks-val',0x16)"><span class="param-val" id="patch-uks-val">24</span></div>
+          <div class="param-row"><span class="param-label">upper fine tune</span><input type="range" min="0" max="100" value="50" step="1" oninput="onPatch(this,'patch-uft-val',0x17)"><span class="param-val" id="patch-uft-val">50</span></div>
+          <div class="param-row"><span class="param-label">lower key shift</span><input type="range" min="0" max="48" value="24" step="1" oninput="onPatch(this,'patch-lks-val',0x18)"><span class="param-val" id="patch-lks-val">24</span></div>
+          <div class="param-row"><span class="param-label">lower fine tune</span><input type="range" min="0" max="100" value="50" step="1" oninput="onPatch(this,'patch-lft-val',0x19)"><span class="param-val" id="patch-lft-val">50</span></div>
+        </div>
+        <div class="section">
+          <div class="section-title">control</div>
+          <div class="param-row"><span class="param-label">key mode</span><input type="range" min="0" max="8" value="0" step="1" oninput="onPatch(this,'patch-keymode-val',0x12)"><span class="param-val" id="patch-keymode-val">0</span></div>
+          <div class="param-row"><span class="param-label">split point</span><input type="range" min="0" max="60" value="30" step="1" oninput="onPatch(this,'patch-split-val',0x13)"><span class="param-val" id="patch-split-val">30</span></div>
+          <div class="param-row"><span class="param-label">bender range</span><input type="range" min="0" max="12" value="2" step="1" oninput="onPatch(this,'patch-bend-val',0x1A)"><span class="param-val" id="patch-bend-val">2</span></div>
+          <div class="param-row"><span class="param-label">aftr bend</span><input type="range" min="0" max="24" value="12" step="1" oninput="onPatch(this,'patch-afterbend-val',0x1B)"><span class="param-val" id="patch-afterbend-val">12</span></div>
+          <div class="param-row"><span class="param-label">portamento</span><div class="wave-toggle"><button class="wave-btn active" id="porta-off-btn" onclick="setPortamento(false)">OFF</button><button class="wave-btn" id="porta-on-btn" onclick="setPortamento(true)">ON</button></div></div>
+          <div class="param-row"><span class="param-label">porta mode</span><input type="range" min="0" max="2" value="0" step="1" oninput="onPatch(this,'patch-portamode-val',0x14)"><span class="param-val" id="patch-portamode-val">0</span></div>
+          <div class="param-row"><span class="param-label">porta time</span><input type="range" min="0" max="100" value="0" step="1" oninput="onPatch(this,'patch-portatime-val',0x1C)"><span class="param-val" id="patch-portatime-val">0</span></div>
+          <div class="param-row"><span class="param-label">hold mode</span><input type="range" min="0" max="2" value="0" step="1" oninput="onPatch(this,'patch-hold-val',0x15)"><span class="param-val" id="patch-hold-val">0</span></div>
+        </div>
+      </div>
+      <div class="section" style="flex:1;">
+        <div class="section-title">P-ENV — pitch envelope</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 8px;margin-bottom:4px;">
+          <div class="param-row"><span class="param-label">velo range</span><input type="range" min="0" max="2" value="0" step="1" oninput="onCommonTone(this,'penv-velo-val',0x0B)"><span class="param-val" id="penv-velo-val">0</span></div>
+          <div class="param-row"><span class="param-label">time KF</span><input type="range" min="0" max="4" value="0" step="1" oninput="onCommonTone(this,'penv-tkf-val',0x0C)"><span class="param-val" id="penv-tkf-val">0</span></div>
+        </div>
+        <canvas id="penv-canvas" class="env-canvas" width="600" height="110"></canvas>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin-top:4px;">
+          <div style="text-align:center;">
+            <div style="font-size:9px;color:var(--text3);margin-bottom:2px;">L0</div>
+            <div id="penv-l0-display" style="font-size:11px;font-weight:bold;color:var(--accent);background:var(--bg);border:0.5px solid var(--border2);border-radius:3px;padding:2px 4px;">50</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:9px;color:var(--text3);margin-bottom:2px;">L1</div>
+            <div id="penv-l1-display" style="font-size:11px;font-weight:bold;color:var(--accent);background:var(--bg);border:0.5px solid var(--border2);border-radius:3px;padding:2px 4px;">50</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:9px;color:var(--text3);margin-bottom:2px;">L2</div>
+            <div id="penv-l2-display" style="font-size:11px;font-weight:bold;color:var(--accent);background:var(--bg);border:0.5px solid var(--border2);border-radius:3px;padding:2px 4px;">50</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:9px;color:var(--text3);margin-bottom:2px;">SusL</div>
+            <div id="penv-susl-display" style="font-size:11px;font-weight:bold;color:var(--accent);background:var(--bg);border:0.5px solid var(--border2);border-radius:3px;padding:2px 4px;">50</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:9px;color:var(--text3);margin-bottom:2px;">EndL</div>
+            <div id="penv-endl-display" style="font-size:11px;font-weight:bold;color:var(--accent);background:var(--bg);border:0.5px solid var(--border2);border-radius:3px;padding:2px 4px;">50</div>
+          </div>
+        </div>
+        <input type="hidden" id="penv-t1-val" value="0">
+        <input type="hidden" id="penv-t2-val" value="0">
+        <input type="hidden" id="penv-t3-val" value="0">
+        <input type="hidden" id="penv-t4-val" value="0">
+        <input type="hidden" id="penv-l0-val" value="50">
+        <input type="hidden" id="penv-l1-val" value="50">
+        <input type="hidden" id="penv-l2-val" value="50">
+        <input type="hidden" id="penv-susl-val" value="50">
+        <input type="hidden" id="penv-endl-val" value="50">
+      </div>
+      <div style="flex:0 0 193px;display:flex;flex-direction:column;gap:4px;">
+        <div class="section">
+          <div class="section-title">LFO 1</div>
+          <div class="param-row"><span class="param-label">waveform</span><input type="range" min="0" max="3" value="0" step="1" oninput="onCommonTone(this,'lfo1-wave-val',0x19)"><span class="param-val" id="lfo1-wave-val">0</span></div>
+          <div class="param-row"><span class="param-label">rate</span><input type="range" min="0" max="100" value="40" step="1" oninput="onCommonTone(this,'lfo1-rate-val',0x1A)"><span class="param-val" id="lfo1-rate-val">40</span></div>
+          <div class="param-row"><span class="param-label">delay</span><input type="range" min="0" max="100" value="0" step="1" oninput="onCommonTone(this,'lfo1-delay-val',0x1B)"><span class="param-val" id="lfo1-delay-val">0</span></div>
+          <div class="param-row"><span class="param-label">sync</span><input type="range" min="0" max="2" value="0" step="1" oninput="onCommonTone(this,'lfo1-sync-val',0x1C)"><span class="param-val" id="lfo1-sync-val">0</span></div>
+        </div>
+        <div class="section">
+          <div class="section-title">LFO 2</div>
+          <div class="param-row"><span class="param-label">waveform</span><input type="range" min="0" max="3" value="0" step="1" oninput="onCommonTone(this,'lfo2-wave-val',0x1D)"><span class="param-val" id="lfo2-wave-val">0</span></div>
+          <div class="param-row"><span class="param-label">rate</span><input type="range" min="0" max="100" value="40" step="1" oninput="onCommonTone(this,'lfo2-rate-val',0x1E)"><span class="param-val" id="lfo2-rate-val">40</span></div>
+          <div class="param-row"><span class="param-label">delay</span><input type="range" min="0" max="100" value="0" step="1" oninput="onCommonTone(this,'lfo2-delay-val',0x1F)"><span class="param-val" id="lfo2-delay-val">0</span></div>
+          <div class="param-row"><span class="param-label">sync</span><input type="range" min="0" max="1" value="0" step="1" oninput="onCommonTone(this,'lfo2-sync-val',0x20)"><span class="param-val" id="lfo2-sync-val">0</span></div>
+        </div>
+        <div class="section">
+          <div class="section-title">LFO 3</div>
+          <div class="param-row"><span class="param-label">waveform</span><input type="range" min="0" max="3" value="0" step="1" oninput="onCommonTone(this,'lfo3-wave-val',0x21)"><span class="param-val" id="lfo3-wave-val">0</span></div>
+          <div class="param-row"><span class="param-label">rate</span><input type="range" min="0" max="100" value="40" step="1" oninput="onCommonTone(this,'lfo3-rate-val',0x22)"><span class="param-val" id="lfo3-rate-val">40</span></div>
+          <div class="param-row"><span class="param-label">delay</span><input type="range" min="0" max="100" value="0" step="1" oninput="onCommonTone(this,'lfo3-delay-val',0x23)"><span class="param-val" id="lfo3-delay-val">0</span></div>
+          <div class="param-row"><span class="param-label">sync</span><input type="range" min="0" max="1" value="0" step="1" oninput="onCommonTone(this,'lfo3-sync-val',0x24)"><span class="param-val" id="lfo3-sync-val">0</span></div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div><!-- /tone-layout -->
+
+  <!-- PATCH -->
+  <div class="patch-layout">
+    <div class="section">
+      <div class="section-title">chorus</div>
+      <div style="display:flex;gap:3px;flex-wrap:wrap;margin-bottom:4px;">
+        <button class="str-btn active" id="chorus-type-0" onclick="setChorusType(0)">CH1</button>
+        <button class="str-btn" id="chorus-type-1" onclick="setChorusType(1)">CH2</button>
+        <button class="str-btn" id="chorus-type-2" onclick="setChorusType(2)">FL1</button>
+        <button class="str-btn" id="chorus-type-3" onclick="setChorusType(3)">FL2</button>
+        <button class="str-btn" id="chorus-type-4" onclick="setChorusType(4)">FBK</button>
+        <button class="str-btn" id="chorus-type-5" onclick="setChorusType(5)">TRM</button>
+        <button class="str-btn" id="chorus-type-6" onclick="setChorusType(6)">CTR</button>
+        <button class="str-btn" id="chorus-type-7" onclick="setChorusType(7)">DIM</button>
+      </div>
+      <span style="font-size:9px;color:var(--text2);display:block;margin-bottom:3px;" id="chorus-type-name">Chorus 1</span>
+      <div class="param-row"><span class="param-label">rate</span><input type="range" min="0" max="100" value="50" step="1" oninput="onCommonTone(this,'chorus-rate-val',0x2B)"><span class="param-val" id="chorus-rate-val">50</span></div>
+      <div class="param-row"><span class="param-label">depth</span><input type="range" min="0" max="100" value="50" step="1" oninput="onCommonTone(this,'chorus-depth-val',0x2C)"><span class="param-val" id="chorus-depth-val">50</span></div>
+      <div class="param-row"><span class="param-label">balance</span><input type="range" min="0" max="100" value="0" step="1" oninput="onCommonTone(this,'chorus-bal-val',0x2D)"><span class="param-val" id="chorus-bal-val">0</span></div>
+    </div>
+    <div class="section">
+      <div class="section-title">chase</div>
+      <div style="font-size:9px;color:var(--text3);margin-bottom:3px;">on/off desde botón del D-50</div>
+      <div class="param-row"><span class="param-label">mode</span><input type="range" min="0" max="2" value="0" step="1" oninput="onPatch(this,'patch-chasemode-val',0x22)"><span class="param-val" id="patch-chasemode-val">0</span></div>
+      <div class="param-row"><span class="param-label">level</span><input type="range" min="0" max="100" value="50" step="1" oninput="onPatch(this,'patch-chaselevel-val',0x23)"><span class="param-val" id="patch-chaselevel-val">50</span></div>
+      <div class="param-row"><span class="param-label">time</span><input type="range" min="0" max="100" value="50" step="1" oninput="onPatch(this,'patch-chasetime-val',0x24)"><span class="param-val" id="patch-chasetime-val">50</span></div>
+    </div>
+    <div class="section">
+      <div class="section-title">EQ</div>
+      <div style="font-size:9px;color:var(--text3);margin-bottom:2px;">LOW</div>
+      <div class="param-row"><span class="param-label">frequency</span><input type="range" min="0" max="15" value="0" step="1" oninput="onCommonTone(this,'loweq-freq-val',0x25)"><span class="param-val" id="loweq-freq-val">0</span></div>
+      <div class="param-row"><span class="param-label">gain</span><input type="range" min="0" max="24" value="12" step="1" oninput="onCommonTone(this,'loweq-gain-val',0x26)"><span class="param-val" id="loweq-gain-val">12</span></div>
+      <div style="font-size:9px;color:var(--text3);margin:3px 0 2px;">HIGH</div>
+      <div class="param-row"><span class="param-label">frequency</span><input type="range" min="0" max="21" value="0" step="1" oninput="onCommonTone(this,'higheq-freq-val',0x27)"><span class="param-val" id="higheq-freq-val">0</span></div>
+      <div class="param-row"><span class="param-label">Q</span><input type="range" min="0" max="6" value="0" step="1" oninput="onCommonTone(this,'higheq-q-val',0x28)"><span class="param-val" id="higheq-q-val">0</span></div>
+      <div class="param-row"><span class="param-label">gain</span><input type="range" min="0" max="24" value="12" step="1" oninput="onCommonTone(this,'higheq-gain-val',0x29)"><span class="param-val" id="higheq-gain-val">12</span></div>
+    </div>
+    <div class="section">
+      <div class="section-title">output</div>
+      <div class="param-row"><span class="param-label">output mode</span><input type="range" min="0" max="3" value="0" step="1" oninput="onPatch(this,'patch-outmode-val',0x1D)"><span class="param-val" id="patch-outmode-val">0</span></div>
+      <div class="param-row"><span class="param-label">reverb type</span><input type="range" min="0" max="31" value="0" step="1" oninput="onPatch(this,'patch-revtype-val',0x1E)"><span class="param-val" id="patch-revtype-val">0</span></div>
+      <div class="param-row"><span class="param-label">reverb bal</span><input type="range" min="0" max="100" value="50" step="1" oninput="onPatch(this,'patch-revbal-val',0x1F)"><span class="param-val" id="patch-revbal-val">50</span></div>
+      <div class="param-row"><span class="param-label">total volume</span><input type="range" min="0" max="100" value="100" step="1" oninput="onPatch(this,'patch-vol-val',0x20)"><span class="param-val" id="patch-vol-val">100</span></div>
+      <div class="param-row"><span class="param-label">tone balance</span><input type="range" min="0" max="100" value="50" step="1" oninput="onPatch(this,'patch-tonebal-val',0x21)"><span class="param-val" id="patch-tonebal-val">50</span></div>
+    </div>
+  </div><!-- /patch-layout -->
+
+  <!-- LOG + FOOTER -->
+  <div class="log-section">
+    <div class="log-header">
+      <span class="log-title">sysex log</span>
+      <button class="btn" onclick="clearLog()">limpiar</button>
+    </div>
+    <div class="sysex-log" id="sysex-log"><span class="empty-log">mueve un parámetro para ver mensajes SysEx...</span></div>
+  </div>
+  <div class="footer">
+    <button class="btn primary" onclick="sendAllParams()">enviar todos</button>
+    <button class="btn primary" onclick="requestDump()">leer del D-50</button>
+    <button class="btn" onclick="savePreset()">💾 guardar</button>
+    <label class="btn" style="cursor:pointer;">📂 cargar<input type="file" accept=".json" style="display:none" onchange="loadPreset(event)"></label>
+    <span class="footer-note" id="read-status"></span>
+    <span class="footer-note">Chrome/Edge · MIDI USB</span>
+  </div>
+
+
+  <script>
+    let midiAccess = null;
+
+    // ── STATE ──────────────────────────────────────────────────────────────
+    // Default values match HTML slider defaults
+    function defaultPartial() {
+      return {
+        // WG Pitch
+        'wg-coarse': 36, 'wg-fine': 50, 'wg-kf': 8,
+        'wg-lfomode': 0, 'wg-penvmode': 0, 'wg-bendmode': 0,
+        'wg-wave': 0,
+        // WG PCM
+        'pcm-wave': 0,
+        // WG Pulse Width
+        'wg-pw': 0, 'wg-pwvelo': 7, 'wg-pwlfos': 0, 'wg-pwlfod': 0, 'wg-pwafter': 7,
+        // TVF
+        'tvf-cutoff': 80, 'tvf-res': 0, 'tvf-kf': 7,
+        'tvf-biasp': 0, 'tvf-biasl': 7,
+        'tvf-envd': 60, 'tvf-velr': 0, 'tvf-dkf': 0, 'tvf-tkf': 0,
+        'tvf-t1': 30, 'tvf-t2': 50, 'tvf-t3': 50, 'tvf-t4': 50, 'tvf-t5': 40,
+        'tvf-l1': 100, 'tvf-l2': 80, 'tvf-l3': 60,
+        'tvf-susl': 80, 'tvf-endl': 0,
+        'tvf-lfos': 0, 'tvf-lfod': 0, 'tvf-after': 7,
+        // TVA
+        'tva-level': 100, 'tva-velo': 50, 'tva-biasp': 0, 'tva-biasl': 0,
+        'tva-t1': 20, 'tva-t2': 50, 'tva-t3': 50, 'tva-t4': 50, 'tva-t5': 40,
+        'tva-l1': 100, 'tva-l2': 100, 'tva-l3': 80,
+        'tva-susl': 80, 'tva-endl': 0,
+        'tva-velof': 0, 'tva-tkf': 0,
+        'tva-lfos': 0, 'tva-lfod': 0, 'tva-after': 7,
+      };
+    }
+
+    function defaultTone() {
+      return {
+        // Tone Name (10 chars)
+        'tone-name': '          ',
+        // Pitch Mod
+        'pitchmod-lfod': 0, 'pitchmod-lever': 0, 'pitchmod-after': 0,
+        // P-ENV
+        'penv-velo': 0, 'penv-tkf': 0,
+        'penv-t1': 0, 'penv-t2': 0, 'penv-t3': 0, 'penv-t4': 0,
+        'penv-l0': 50, 'penv-l1': 50, 'penv-l2': 50,
+        'penv-susl': 50, 'penv-endl': 50,
+        // LFO 1
+        'lfo1-wave': 0, 'lfo1-rate': 40, 'lfo1-delay': 0, 'lfo1-sync': 0,
+        // LFO 2
+        'lfo2-wave': 0, 'lfo2-rate': 40, 'lfo2-delay': 0, 'lfo2-sync': 0,
+        // LFO 3
+        'lfo3-wave': 0, 'lfo3-rate': 40, 'lfo3-delay': 0, 'lfo3-sync': 0,
+        // Chorus
+        'chorus-type': 0, 'chorus-rate': 50, 'chorus-depth': 50, 'chorus-bal': 0,
+        // EQ
+        'loweq-freq': 0, 'loweq-gain': 12,
+        'higheq-freq': 0, 'higheq-q': 0, 'higheq-gain': 12,
+      };
+    }
+
+    function defaultPatch() {
+      return {
+        'patch-keymode': 0, 'patch-split': 30,
+        'patch-bend': 2, 'patch-afterbend': 12,
+        'patch-portamode': 0, 'patch-portatime': 0, 'patch-hold': 0,
+        'patch-uks': 24, 'patch-uft': 50, 'patch-lks': 24, 'patch-lft': 50,
+        'patch-outmode': 0, 'patch-revtype': 0, 'patch-revbal': 50,
+        'patch-vol': 100, 'patch-tonebal': 50,
+        'patch-chasemode': 0, 'patch-chaselevel': 50, 'patch-chasetime': 50,
+      };
+    }
+
+    const STATE = {
+      partials: [defaultPartial(), defaultPartial(), defaultPartial(), defaultPartial()],
+      tones: { upper: defaultTone(), lower: defaultTone() },
+      patch: defaultPatch(),
+      muteState: [false, false, false, false],
+      structureState: { upper: 0, lower: 0 },
+      pcmWave: [0, 0, 0, 0],
+      waveform: [0, 0, 0, 0],       // 0=SQU, 1=SAW
+      chorusType: { upper: 0, lower: 0 },
+      portamentoOn: false,
+    };
+
+    // ── RENDER ─────────────────────────────────────────────────────────────
+    // Update all partial controls from STATE
+    function renderPartial() {
+      const p = STATE.partials[currentPartial];
+      for (const [key, val] of Object.entries(p)) {
+        const slider = document.querySelector(`input[oninput*="'${key}-val'"]`);
+        const label  = document.getElementById(`${key}-val`);
+        if (slider) slider.value = val;
+        if (label)  label.textContent = val;
+      }
+      // Redraw envelopes
+      envDraw('tvf');
+      envDraw('tva');
+      // Waveform buttons
+      const w = STATE.waveform[currentPartial];
+      document.getElementById('wave-squ').classList.toggle('active', w === 0);
+      document.getElementById('wave-saw').classList.toggle('active', w === 1);
+      // P-ENV mode buttons
+      const pm = STATE.partials[currentPartial]['wg-penvmode'] || 0;
+      document.getElementById('penvmode-off').classList.toggle('active', pm === 0);
+      document.getElementById('penvmode-nrm').classList.toggle('active', pm === 1);
+      document.getElementById('penvmode-inv').classList.toggle('active', pm === 2);
+      // PCM select
+      const pcmSel = document.getElementById('pcm-select');
+      const pcmNum = document.getElementById('pcm-number');
+      if (pcmSel) { pcmSel.value = STATE.pcmWave[currentPartial]; }
+      if (pcmNum) { pcmNum.textContent = STATE.pcmWave[currentPartial] + 1; }
+      // Update PCM/TVF visibility
+      updatePartialUI();
+    }
+
+    // Update all tone controls from STATE
+    function renderTone() {
+      const t = STATE.tones[currentTone];
+      // Tone name
+      const nameInput = document.getElementById('tone-name-input');
+      if (nameInput) nameInput.value = (t['tone-name'] || '          ').trimEnd();
+      for (const [key, val] of Object.entries(t)) {
+        if (key === 'tone-name') continue;
+        const slider = document.querySelector(`input[oninput*="'${key}-val'"]`);
+        const label  = document.getElementById(`${key}-val`);
+        if (slider) slider.value = val;
+        if (label)  label.textContent = val;
+      }
+      // Chorus type buttons
+      const ct = STATE.chorusType[currentTone];
+      for (let i = 0; i < 8; i++) {
+        const btn = document.getElementById('chorus-type-' + i);
+        if (btn) btn.classList.toggle('active', i === ct);
+      }
+      const ctName = document.getElementById('chorus-type-name');
+      if (ctName) ctName.textContent = CHORUS_NAMES[ct];
+      penvDraw();
+    }
+    const STRUCTURE_NAMES = [
+      'Synth + Synth',
+      'Synth + Synth (Ring Mod)',
+      'PCM + Synth',
+      'PCM + Synth (Ring Mod)',
+      'Synth + PCM (Ring Mod)',
+      'PCM + PCM',
+      'PCM + PCM (Ring Mod)',
+    ];
+
+    const structureState = { upper: 0, lower: 0 };
+
+    // SVG diagram generator for each structure
+    // Layout: two rows (P1 top, P2 bottom), arrow → output
+    // S = synth box, P = PCM box, ⊠ = ring mod
+    function structureSVG(idx) {
+      const W = 200, H = 54;
+      const c = '#888'; // line color
+      const ac = '#c8a96e'; // accent
+
+      // box helper
+      function box(x, y, label, isPCM) {
+        const col = isPCM ? '#4af' : '#c8a96e';
+        return `<rect x="${x}" y="${y}" width="26" height="18" rx="3"
+                  fill="none" stroke="${col}" stroke-width="1.2"/>
+                <text x="${x+13}" y="${y+13}" text-anchor="middle"
+                  font-family="monospace" font-size="11" fill="${col}" font-weight="bold">${label}</text>`;
+      }
+      // ring mod helper
+      function ring(x, y) {
+        return `<rect x="${x}" y="${y}" width="18" height="18" rx="3"
+                  fill="none" stroke="#fff" stroke-width="1.2" opacity="0.5"/>
+                <line x1="${x}" y1="${y}" x2="${x+18}" y2="${y+18}" stroke="#fff" stroke-width="1" opacity="0.5"/>
+                <line x1="${x+18}" y1="${y}" x2="${x}" y2="${y+18}" stroke="#fff" stroke-width="1" opacity="0.5"/>`;
+      }
+      // arrow
+      function arrow(x1,y1,x2,y2) {
+        return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"
+                  stroke="${c}" stroke-width="1.2" marker-end="url(#arr)"/>`;
+      }
+      // horizontal line
+      function hline(x1,y1,x2) {
+        return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y1}" stroke="${c}" stroke-width="1.2"/>`;
+      }
+      // join two rows into one point
+      function vjoin(x, y1, y2, xout) {
+        const mid = (y1+y2)/2;
+        return `<line x1="${x}" y1="${y1}" x2="${x}" y2="${y2}" stroke="${c}" stroke-width="1.2"/>
+                <line x1="${x}" y1="${mid}" x2="${xout}" y2="${mid}" stroke="${c}" stroke-width="1.2"/>`;
+      }
+
+      const defs = `<defs><marker id="arr" markerWidth="6" markerHeight="6"
+        refX="6" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="${c}"/>
+      </marker></defs>`;
+
+      const out = `<text x="${W-8}" y="30" text-anchor="middle"
+        font-family="monospace" font-size="10" fill="${c}">OUT</text>`;
+
+      let body = '';
+      // y positions: top row center=18, bottom row center=36 → box top: 9, 27
+      const y1 = 9, y2 = 27, cy1 = y1+9, cy2 = y2+9;
+
+      if (idx === 0) {
+        // 1: S + S  → merge → out
+        body += box(10, y1, 'S', false);
+        body += box(10, y2, 'S', false);
+        body += hline(36, cy1, 80); body += hline(36, cy2, 80);
+        body += vjoin(80, cy1, cy2, 145);
+        body += arrow(145, (cy1+cy2)/2, W-20, (cy1+cy2)/2);
+      } else if (idx === 1) {
+        // 2: S ⊠ S → out
+        body += box(10, y1, 'S', false);
+        body += box(10, y2, 'S', false);
+        body += hline(36, cy1, 70); body += hline(36, cy2, 70);
+        body += ring(70, (cy1+cy2)/2 - 9);
+        body += arrow(88, (cy1+cy2)/2, W-20, (cy1+cy2)/2);
+      } else if (idx === 2) {
+        // 3: P → S → out  (P feeds into S)
+        body += box(10, y1, 'P', true);
+        body += box(10, y2, 'S', false);
+        body += hline(36, cy1, 55);
+        body += `<line x1="55" y1="${cy1}" x2="55" y2="${cy2}" stroke="${c}" stroke-width="1.2"/>`;
+        body += arrow(55, cy2, 68, cy2);  // P→S merge before S? actually P is attack into S
+        // simpler: P on top feeds down into S, S → out
+        body += arrow(36, cy2+0, W-20, cy2);
+      } else if (idx === 3) {
+        // 4: P → S ⊠ → out
+        body += box(10, y1, 'P', true);
+        body += box(10, y2, 'S', false);
+        body += hline(36, cy1, 80); body += hline(36, cy2, 80);
+        body += ring(80, (cy1+cy2)/2 - 9);
+        body += arrow(98, (cy1+cy2)/2, W-20, (cy1+cy2)/2);
+      } else if (idx === 4) {
+        // 5: S ⊠ P → out
+        body += box(10, y1, 'S', false);
+        body += box(10, y2, 'P', true);
+        body += hline(36, cy1, 80); body += hline(36, cy2, 80);
+        body += ring(80, (cy1+cy2)/2 - 9);
+        body += arrow(98, (cy1+cy2)/2, W-20, (cy1+cy2)/2);
+      } else if (idx === 5) {
+        // 6: P + P → merge → out
+        body += box(10, y1, 'P', true);
+        body += box(10, y2, 'P', true);
+        body += hline(36, cy1, 80); body += hline(36, cy2, 80);
+        body += vjoin(80, cy1, cy2, 145);
+        body += arrow(145, (cy1+cy2)/2, W-20, (cy1+cy2)/2);
+      } else if (idx === 6) {
+        // 7: P ⊠ P → out
+        body += box(10, y1, 'P', true);
+        body += box(10, y2, 'P', true);
+        body += hline(36, cy1, 80); body += hline(36, cy2, 80);
+        body += ring(80, (cy1+cy2)/2 - 9);
+        body += arrow(98, (cy1+cy2)/2, W-20, (cy1+cy2)/2);
+      }
+
+      return `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
+        ${defs}${body}${out}
+      </svg>`;
+    }
+
+    // Which partial (0=P1, 1=P2, both, none) is PCM for each structure index
+    const STRUCT_PCM = [
+      [],       // 1: S+S
+      [],       // 2: S⊠S
+      [0],      // 3: P+S  → P1 is PCM
+      [0],      // 4: P+S⊠ → P1 is PCM
+      [1],      // 5: S⊠P  → P2 is PCM
+      [0, 1],   // 6: P+P
+      [0, 1],   // 7: P⊠P
+    ];
+
+    function isPartialPCM(partialIdx) {
+      const tone = partialIdx < 2 ? 'upper' : 'lower';
+      const strIdx = STATE.structureState[tone];
+      const localIdx = partialIdx % 2; // 0=P1, 1=P2 within the tone
+      return STRUCT_PCM[strIdx].includes(localIdx);
+    }
+
+    function onPCMWave(sel) {
+      const val = parseInt(sel.value);
+      STATE.pcmWave[currentPartial] = val;
+      document.getElementById('pcm-number').textContent = val + 1;
+      const base = PARTIAL_BASE_ADDR[currentPartial];
+      const addr = [base[0], base[1], base[2] + 0x07];
+      const msg = buildSysEx(addr, val);
+      let sent = false;
+      if (selectedOutput) {
+        try { selectedOutput.send(msg); sent = true; } catch(e) {}
+      }
+      logSysEx(msg, 'wg-pcm-wave#', sent);
+    }
+
+    function updatePartialUI() {
+      const isPCM = isPartialPCM(currentPartial);
+      const pcmRow  = document.getElementById('pcm-row');
+      const pcmSel  = document.getElementById('pcm-select');
+      const pcmNum  = document.getElementById('pcm-number');
+      const tvfSec  = document.getElementById('tvf-section');
+
+      // PCM row: visible only if current partial is PCM
+      pcmRow.classList.toggle('visible', isPCM);
+      if (isPCM) {
+        pcmSel.value = STATE.pcmWave[currentPartial];
+        pcmNum.textContent = STATE.pcmWave[currentPartial] + 1;
+      }
+
+      // TVF: disabled if PCM (PCM partials have no TVF)
+      if (tvfSec) tvfSec.classList.toggle('section-disabled', isPCM);
+      const tvfEnvSec = document.getElementById('tvf-env-section');
+      const tvfModSec = document.getElementById('tvf-mod-section');
+      if (tvfEnvSec) tvfEnvSec.classList.toggle('section-disabled', isPCM);
+      if (tvfModSec) tvfModSec.classList.toggle('section-disabled', isPCM);
+      // WG pulse width only applies to synth partials
+      const wgPwSec = document.getElementById('wg-pw-section');
+      if (wgPwSec) wgPwSec.classList.toggle('section-disabled', isPCM);
+      // WG waveform row only applies to synth partials
+      const wgWaveRow = document.getElementById('wg-waveform-row');
+      if (wgWaveRow) wgWaveRow.classList.toggle('section-disabled', isPCM);
+    }
+
+    function setStructure(tone, idx) {
+      STATE.structureState[tone] = idx;
+      const btns = document.querySelectorAll(`#str-${tone} .str-btn`);
+      btns.forEach((b, i) => b.classList.toggle('active', i === idx));
+      document.getElementById(`str-${tone}-desc`).textContent = STRUCTURE_NAMES[idx];
+      document.getElementById(`str-${tone}-diagram`).innerHTML = structureSVG(idx);
+
+      const base = tone === 'upper' ? [0x00, 0x01, 0x00] : [0x00, 0x02, 0x40];
+      const addr = [base[0], base[1], base[2] + 0x0A];
+      const msg = buildSysEx(addr, idx);
+      let sent = false;
+      if (selectedOutput) {
+        try { selectedOutput.send(msg); sent = true; } catch(e) {}
+      }
+      logSysEx(msg, `structure-${tone}`, sent);
+      updatePartialUI();
+    }
+
+    // Init diagrams on load
+    // ── ENVELOPE ENGINE ──────────────────────────────────────────────────
+    // Each envelope: T1-T5 (time), L1-L3 (level), SusL, EndL
+    // Layout: KEY ON → L1(T1) → L2(T2) → L3(T3) → SusL(T4) → KEY OFF → EndL(T5)
+
+    // ── ENVELOPE ENGINE (reescrito) ─────────────────────────────────────
+    // Modelo: 5 puntos arrastrables sobre un canvas
+    // Eje X: tiempo (T1-T5, cada uno 0-100, independientes)
+    // Eje Y: nivel (L1-L3, SusL, EndL, cada uno 0-100)
+    // Canvas dividido en dos zonas:
+    //   Izquierda (KEY ON): T1+T2+T3+T4 proporcionales entre 0..KS
+    //   Derecha (KEY OFF):  T5 proporcional entre KS..1
+    // KS (KEY OFF SPLIT) = 0.65 fijo visualmente
+    //
+    // IMPORTANTE: los tiempos son independientes entre sí.
+    // Mover un punto NO afecta a los demás.
+
+    const KS = 0.65; // fracción del canvas para la zona KEY ON
+    const T_MAX = 100; // valor máximo de cada tiempo
+
+    const ENV_DEFS = {
+      tvf: {
+        canvas:  'tvf-env-canvas',
+        color:   '#4af',
+        fill:    'rgba(68,170,255,0.1)',
+        times:   ['tvf-t1','tvf-t2','tvf-t3','tvf-t4','tvf-t5'],
+        levels:  ['tvf-l1','tvf-l2','tvf-l3','tvf-susl','tvf-endl'],
+        offsets: { t:[0x16,0x17,0x18,0x19,0x1A], l:[0x1B,0x1C,0x1D,0x1E,0x1F] }
+      },
+      tva: {
+        canvas:  'tva-env-canvas',
+        color:   '#c8a96e',
+        fill:    'rgba(200,169,110,0.1)',
+        times:   ['tva-t1','tva-t2','tva-t3','tva-t4','tva-t5'],
+        levels:  ['tva-l1','tva-l2','tva-l3','tva-susl','tva-endl'],
+        offsets: { t:[0x27,0x28,0x29,0x2A,0x2B], l:[0x2C,0x2D,0x2E,0x2F,0x30] }
+      }
+    };
+
+    function getEnvVal(key) {
+      // Read directly from STATE (source of truth)
+      const val = STATE.partials[currentPartial][key];
+      if (val !== undefined) return parseInt(val) || 0;
+      // Fallback to hidden input
+      const el = document.getElementById(key + '-val');
+      if (el) return parseInt(el.value) || 0;
+      return 0;
+    }
+
+    function setEnvVal(key, val, sysexOffset) {
+      // Update hidden input
+      const el = document.getElementById(key + '-val');
+      if (el) el.value = val;
+      // Update STATE
+      STATE.partials[currentPartial][key] = val;
+      // Send SysEx
+      const base = PARTIAL_BASE_ADDR[currentPartial];
+      const addr = [base[0], base[1], base[2] + sysexOffset];
+      const msg = buildSysEx(addr, val);
+      if (selectedOutput) try { selectedOutput.send(msg); } catch(e) {}
+    }
+
+    // Convert T/L values to canvas coordinates
+    // KEY ON zone (0..KS) split into 4 equal sub-zones for T1,T2,T3,T4
+    // Each sub-zone: T=0 → left edge, T=100 → right edge (independent)
+    // KEY OFF zone (KS..1): T5=0 → left, T5=100 → right
+    function envGetPoints(T, L, W, H, PAD) {
+      const IW = W - PAD.l - PAD.r;
+      const IH = H - PAD.t - PAD.b;
+      const subW = KS / 4; // each of T1-T4 gets 1/4 of the KS zone
+
+      function xOn(idx) {
+        // Point idx (0-3) sits at the right edge of its sub-zone scaled by T value
+        const zoneStart = subW * idx;
+        return PAD.l + (zoneStart + subW * T[idx]/T_MAX) * IW;
+      }
+      function xOff() {
+        return PAD.l + (KS + (1-KS) * T[4]/T_MAX) * IW;
+      }
+      function yLevel(l) {
+        return PAD.t + (1 - l/100) * IH;
+      }
+
+      // susStartX = where T4 point lands (right edge of its sub-zone)
+      // susEndX   = fixed KS boundary = KEY OFF line
+      const susStartX = PAD.l + (subW * 3 + subW * T[3]/T_MAX) * IW;
+      const susEndX   = PAD.l + KS * IW;
+      const susY      = yLevel(L[3]);
+
+      return [
+        { x: xOn(0),    y: yLevel(L[0]) },             // 0: L1
+        { x: xOn(1),    y: yLevel(L[1]) },             // 1: L2
+        { x: xOn(2),    y: yLevel(L[2]) },             // 2: L3
+        { x: susStartX, y: susY, isSusStart: true },   // 3: SusL drag point (T4 end)
+        { x: susEndX,   y: susY, isSusEnd:   true },   // 4: SusL right anchor (KEY OFF)
+        { x: xOff(),    y: yLevel(L[4]) },             // 5: EndL
+      ];
+    }
+
+    function envDraw(type) {
+      const def = ENV_DEFS[type];
+      const canvas = document.getElementById(def.canvas);
+      if (!canvas) return;
+
+      const T = def.times.map(k => getEnvVal(k));
+      const L = def.levels.map(k => getEnvVal(k));
+
+      // Sync T5 slider
+      const t5disp = document.getElementById(type + '-t5-display');
+      const t5slider = document.querySelector(`input[oninput*="'${type}-t5-val'"]`);
+      if (t5disp) t5disp.textContent = T[4];
+      if (t5slider) t5slider.value = T[4];
+
+      const W = canvas.width, H = canvas.height;
+      const PAD = { l: 44, r: 20, t: 20, b: 28 };
+      const IW = W - PAD.l - PAD.r;
+      const IH = H - PAD.t - PAD.b;
+      const ctx = canvas.getContext('2d');
+
+      ctx.clearRect(0, 0, W, H);
+
+      // Grid lines
+      ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 4; i++) {
+        const y = PAD.t + i * IH/4;
+        ctx.beginPath(); ctx.moveTo(PAD.l, y); ctx.lineTo(W-PAD.r, y); ctx.stroke();
+      }
+
+      const pts = envGetPoints(T, L, W, H, PAD);
+      // pts: [0]=L1, [1]=L2, [2]=L3, [3]=SusStart, [4]=SusEnd, [5]=EndL
+      const keyOffX = pts[4].x; // fixed KS boundary
+
+      // KEY OFF dashed line
+      ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+      ctx.setLineDash([4,4]);
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(keyOffX, PAD.t);
+      ctx.lineTo(keyOffX, H - PAD.b);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Zone labels
+      ctx.fillStyle = 'rgba(255,255,255,0.3)';
+      ctx.font = '11px monospace';
+      ctx.fillText('KEY ON',  PAD.l + 4,  H - 4);
+      ctx.fillText('KEY OFF', keyOffX + 4, H - 4);
+
+      // T labels on X axis (T1-T4 under pts 0-3, T5 under pts[5])
+      const tLabels = ['T1','T2','T3','T4','','T5'];
+      pts.forEach((p, i) => {
+        if (!tLabels[i]) return;
+        ctx.fillStyle = 'rgba(255,255,255,0.25)';
+        ctx.fillText(tLabels[i], p.x - 8, H - PAD.b + 12);
+      });
+
+      // L labels on Y axis — skip SusEnd (same y as SusStart)
+      const lLabels = ['L1','L2','L3','SusL','','EndL'];
+      pts.forEach((p, i) => {
+        if (!lLabels[i]) return;
+        ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        ctx.fillText(lLabels[i], 2, p.y + 4);
+      });
+
+      // ── Envelope path ───────────────────────────────────────────────────
+      const startX = PAD.l;
+      const startY = PAD.t + IH; // level 0 = bottom
+
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(pts[0].x, pts[0].y); // → L1
+      ctx.lineTo(pts[1].x, pts[1].y); // → L2
+      ctx.lineTo(pts[2].x, pts[2].y); // → L3
+      ctx.lineTo(pts[3].x, pts[3].y); // → SusStart
+      ctx.lineTo(pts[4].x, pts[4].y); // → SusEnd (horizontal sustain line)
+      ctx.lineTo(pts[5].x, pts[5].y); // → EndL
+
+      ctx.strokeStyle = def.color;
+      ctx.lineWidth = 2;
+      ctx.shadowColor = def.color;
+      ctx.shadowBlur = 4;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // Fill
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(pts[0].x, pts[0].y);
+      ctx.lineTo(pts[1].x, pts[1].y);
+      ctx.lineTo(pts[2].x, pts[2].y);
+      ctx.lineTo(pts[3].x, pts[3].y);
+      ctx.lineTo(pts[4].x, pts[4].y);
+      ctx.lineTo(pts[5].x, pts[5].y);
+      ctx.lineTo(pts[5].x, startY);
+      ctx.lineTo(startX, startY);
+      ctx.fillStyle = def.fill;
+      ctx.fill();
+
+      // ── Draggable points ─────────────────────────────────────────────────
+      // pts[3] = SusStart drag handle, pts[4] = SusEnd anchor, pts[5] = EndL
+      pts.forEach((p, i) => {
+        if (p.isSusEnd) {
+          // Right anchor of sustain: small diamond, not draggable
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 4, 0, Math.PI*2);
+          ctx.fillStyle = def.color;
+          ctx.globalAlpha = 0.5;
+          ctx.fill();
+          ctx.globalAlpha = 1;
+          return;
+        }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 7, 0, Math.PI*2);
+        ctx.fillStyle = def.color;
+        ctx.fill();
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      });
+    }
+
+    function envRedraw(type) { envDraw(type); }
+
+    // Drag
+    const envDrag = { active: false, type: null, idx: -1 };
+
+    function envSetupDrag(type) {
+      const def = ENV_DEFS[type];
+      const canvas = document.getElementById(def.canvas);
+      if (!canvas) return;
+
+      const W = canvas.width, H = canvas.height;
+      const PAD = { l: 44, r: 20, t: 20, b: 28 };
+      const IW = W - PAD.l - PAD.r;
+      const IH = H - PAD.t - PAD.b;
+
+      function getXY(e) {
+        const rect = canvas.getBoundingClientRect();
+        const sx = canvas.width / rect.width;
+        const sy = canvas.height / rect.height;
+        const cx = e.touches ? e.touches[0].clientX : e.clientX;
+        const cy = e.touches ? e.touches[0].clientY : e.clientY;
+        return { x: (cx - rect.left)*sx, y: (cy - rect.top)*sy };
+      }
+
+      function findPoint(mx, my) {
+        const T = def.times.map(k => getEnvVal(k));
+        const L = def.levels.map(k => getEnvVal(k));
+        const pts = envGetPoints(T, L, W, H, PAD);
+        let best = -1, bestD = 18;
+        pts.forEach((p, i) => {
+          if (p.isSusEnd) return; // anchor only, not draggable
+          const d = Math.hypot(p.x-mx, p.y-my);
+          if (d < bestD) { bestD = d; best = i; }
+        });
+        return best;
+      }
+
+      canvas.onmousedown = canvas.ontouchstart = (e) => {
+        e.preventDefault();
+        const {x, y} = getXY(e);
+        const idx = findPoint(x, y);
+        if (idx >= 0) {
+          envDrag.active = true;
+          envDrag.type = type;
+          envDrag.idx = idx;
+        }
+      };
+
+      canvas.onmousemove = canvas.ontouchmove = (e) => {
+        e.preventDefault();
+        if (!envDrag.active || envDrag.type !== type) return;
+
+        const {x, y} = getXY(e);
+        const idx = envDrag.idx;
+        const T = def.times.map(k => getEnvVal(k));
+        const L = def.levels.map(k => getEnvVal(k));
+
+        // Map pts index → T/L array index
+        // pts: [0]=L1, [1]=L2, [2]=L3, [3]=SusStart(T4/SusL), [4]=SusEnd(skip), [5]=EndL(T5)
+        // T/L arrays are 5 elements: indices 0-4
+        // pts[0-2] → T/L[0-2], pts[3] → T/L[3], pts[5] → T/L[4]
+        const tlIdx = idx <= 3 ? idx : 4; // pts[5] maps to T/L[4]
+
+        // ── Y axis: update level ──────────────────────────────
+        const relY = Math.max(0, Math.min(IH, y - PAD.t));
+        const newL = Math.round((1 - relY/IH) * 100);
+        setEnvVal(def.levels[tlIdx], Math.max(0, Math.min(100, newL)), def.offsets.l[tlIdx]);
+
+        // ── X axis: update time ───────────────────────────────
+        const relX = x - PAD.l;
+
+        if (tlIdx < 4) {
+          // Each T has its own sub-zone of width (KS/4 * IW)
+          const subW2 = KS / 4;
+          const zoneStart = PAD.l + subW2 * tlIdx * IW;
+          const zoneWidth = subW2 * IW;
+          const localX = Math.max(0, Math.min(zoneWidth, x - zoneStart));
+          const newT = Math.round((localX / zoneWidth) * T_MAX);
+          setEnvVal(def.times[tlIdx], Math.max(0, Math.min(100, newT)), def.offsets.t[tlIdx]);
+        } else {
+          // KEY OFF zone: x maps to T5 directly
+          const frac = Math.max(0, Math.min(1, (relX - KS*IW) / ((1-KS)*IW)));
+          const newT5 = Math.round(frac * T_MAX);
+          setEnvVal(def.times[4], Math.max(0, Math.min(100, newT5)), def.offsets.t[4]);
+        }
+
+        envDraw(type);
+      };
+
+      const stop = () => { envDrag.active = false; };
+      canvas.onmouseup = canvas.ontouchend = stop;
+      window.addEventListener('mouseup', stop);
+    }
+
+    // ── P-ENV (bipolar pitch envelope) ──────────────────────────────────────
+    // L0 = initial pitch before T1, center=50 is neutral pitch
+    // Points: L0(start) → L1(T1) → L2(T2) → SusL(T3) ... SusL(T4/KEY OFF) → EndL
+
+    const PENV_KEYS = {
+      times:  ['penv-t1','penv-t2','penv-t3','penv-t4'],
+      levels: ['penv-l0','penv-l1','penv-l2','penv-susl','penv-endl'],
+      tOffsets: [0x0D, 0x0E, 0x0F, 0x10],
+      lOffsets: [0x11, 0x12, 0x13, 0x14, 0x15],
+    };
+
+    function getPenvVal(key) {
+      const val = STATE.tones[currentTone][key];
+      if (val !== undefined) return parseInt(val) || 0;
+      const el = document.getElementById(key + '-val');
+      if (el) return parseInt(el.value) || 0;
+      return 50;
+    }
+
+    function setPenvVal(key, val, sysexOffset) {
+      const el = document.getElementById(key + '-val');
+      if (el) el.value = val;
+      STATE.tones[currentTone][key] = val;
+      const toneKey = currentTone === 'upper' ? 'upper' : 'lower';
+      const baseAddr = toneKey === 'upper' ? [0x00,0x01,0x00] : [0x00,0x02,0x40];
+      const addr = [baseAddr[0], baseAddr[1], baseAddr[2] + sysexOffset];
+      const msg = buildSysEx(addr, val);
+      if (selectedOutput) try { selectedOutput.send(msg); } catch(e) {}
+    }
+
+    function penvDraw() {
+      const canvas = document.getElementById('penv-canvas');
+      if (!canvas) return;
+
+      const W = canvas.width, H = canvas.height;
+      const PAD = { l: 52, r: 20, t: 14, b: 28 };
+      const IW = W - PAD.l - PAD.r;
+      const IH = H - PAD.t - PAD.b;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, W, H);
+
+      // Update level displays
+      const dispKeys = ['penv-l0','penv-l1','penv-l2','penv-susl','penv-endl'];
+      dispKeys.forEach(k => {
+        const el = document.getElementById(k + '-display');
+        if (el) el.textContent = getPenvVal(k);
+      });
+
+      const T = PENV_KEYS.times.map(k => getPenvVal(k));
+      const L = PENV_KEYS.levels.map(k => getPenvVal(k));
+
+      // Center Y = level 50 = neutral pitch
+      const centerY = PAD.t + IH / 2;
+      const subW = KS / 4;
+
+      function xOn(idx) {
+        return PAD.l + (subW * idx + subW * T[idx] / T_MAX) * IW;
+      }
+      function xOff() {
+        return PAD.l + KS * IW; // EndL is at KEY OFF boundary
+      }
+      function yLevel(l) {
+        return PAD.t + (1 - l / 100) * IH;
+      }
+
+      const susStartX = PAD.l + (subW * 3 + subW * T[3] / T_MAX) * IW;
+      const susEndX   = PAD.l + KS * IW;
+      const susY      = yLevel(L[3]);
+
+      const startX = PAD.l;
+      const pts = [
+        { x: startX,    y: yLevel(L[0]), label: 'L0' },
+        { x: xOn(0),    y: yLevel(L[1]), label: 'L1' },
+        { x: xOn(1),    y: yLevel(L[2]), label: 'L2' },
+        { x: xOn(2),    y: susY,         label: 'SusL', isSusStart: true },
+        { x: susStartX, y: susY,                        isSusEnd: true },
+        { x: xOff(),    y: yLevel(L[4]), label: 'EndL' },
+      ];
+
+      // Grid lines (subtle)
+      ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 4; i++) {
+        const y = PAD.t + i * IH / 4;
+        ctx.beginPath(); ctx.moveTo(PAD.l, y); ctx.lineTo(W - PAD.r, y); ctx.stroke();
+      }
+
+      // CENTER PITCH line (dashed, prominent)
+      ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+      ctx.setLineDash([3, 4]);
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(PAD.l, centerY);
+      ctx.lineTo(W - PAD.r, centerY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // "CENTER PITCH" label
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ctx.font = '11px monospace';
+      ctx.fillText('CTR', 2, centerY + 3);
+
+      // KEY OFF dashed line
+      ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+      ctx.setLineDash([4, 4]);
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(susEndX, PAD.t);
+      ctx.lineTo(susEndX, H - PAD.b);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Zone labels
+      ctx.fillStyle = 'rgba(255,255,255,0.3)';
+      ctx.font = '11px monospace';
+      ctx.fillText('KEY ON',  PAD.l + 4, H - 4);
+      ctx.fillText('KEY OFF', susEndX + 4, H - 4);
+
+      // T labels
+      const tLabels = ['','T1','T2','T3','T4',''];
+      pts.forEach((p, i) => {
+        if (!tLabels[i]) return;
+        ctx.fillStyle = 'rgba(255,255,255,0.25)';
+        ctx.fillText(tLabels[i], p.x - 8, H - PAD.b + 12);
+      });
+
+      // L labels
+      pts.forEach((p, i) => {
+        if (!p.label) return;
+        ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        ctx.fillText(p.label, 2, p.y + 3);
+      });
+
+      // ── Envelope path ──
+      const color = '#a0e080';
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y); // L0
+      ctx.lineTo(pts[1].x, pts[1].y); // → L1
+      ctx.lineTo(pts[2].x, pts[2].y); // → L2
+      ctx.lineTo(pts[3].x, pts[3].y); // → SusL (T3)
+      ctx.lineTo(pts[4].x, pts[4].y); // → T4 (horizontal sustain)
+      ctx.lineTo(pts[5].x, pts[5].y); // → EndL
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 4;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // Bipolar fill
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, centerY);
+      ctx.lineTo(pts[0].x, pts[0].y);
+      ctx.lineTo(pts[1].x, pts[1].y);
+      ctx.lineTo(pts[2].x, pts[2].y);
+      ctx.lineTo(pts[3].x, pts[3].y);
+      ctx.lineTo(pts[4].x, pts[4].y);
+      ctx.lineTo(pts[5].x, pts[5].y);
+      ctx.lineTo(pts[5].x, centerY);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(160,224,128,0.12)';
+      ctx.fill();
+
+      // ── Draggable points ──
+      pts.forEach((p, i) => {
+        if (p.isSusEnd) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 4, 0, Math.PI*2);
+          ctx.fillStyle = color;
+          ctx.globalAlpha = 0.5;
+          ctx.fill();
+          ctx.globalAlpha = 1;
+          return;
+        }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 7, 0, Math.PI*2);
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      });
+    }
+
+    function penvSetupDrag() {
+      const canvas = document.getElementById('penv-canvas');
+      if (!canvas) return;
+
+      const W = canvas.width, H = canvas.height;
+      const PAD = { l: 52, r: 20, t: 14, b: 28 };
+      const IW = W - PAD.l - PAD.r;
+      const IH = H - PAD.t - PAD.b;
+
+      function getXY(e) {
+        const r = canvas.getBoundingClientRect();
+        const scaleX = W / r.width;
+        const scaleY = H / r.height;
+        const src = e.touches ? e.touches[0] : e;
+        return { x: (src.clientX - r.left) * scaleX, y: (src.clientY - r.top) * scaleY };
+      }
+
+      function findPoint(mx, my) {
+        const T = PENV_KEYS.times.map(k => getPenvVal(k));
+        const L = PENV_KEYS.levels.map(k => getPenvVal(k));
+        const subW = KS / 4;
+        function xOn(idx) { return PAD.l + (subW * idx + subW * T[idx]/T_MAX) * IW; }
+        function yLevel(l) { return PAD.t + (1 - l/100) * IH; }
+        const susY      = yLevel(L[3]);
+        const susStartX = PAD.l + (subW * 3 + subW * T[3] / T_MAX) * IW;
+        const pts = [
+          { x: PAD.l,     y: yLevel(L[0]) },
+          { x: xOn(0),    y: yLevel(L[1]) },
+          { x: xOn(1),    y: yLevel(L[2]) },
+          { x: xOn(2),    y: susY, isSusStart: true },
+          { x: susStartX, y: susY },
+          { x: PAD.l + KS*IW, y: yLevel(L[4]) },
+        ];
+        let best = -1, bestD = 18;
+        pts.forEach((p, i) => {
+          if (p.isSusEnd) return;
+          const d = Math.hypot(p.x - mx, p.y - my);
+          if (d < bestD) { bestD = d; best = i; }
+        });
+        return best;
+      }
+
+      canvas.onmousedown = canvas.ontouchstart = (e) => {
+        e.preventDefault();
+        const {x, y} = getXY(e);
+        const idx = findPoint(x, y);
+        if (idx >= 0) {
+          envDrag.active = true;
+          envDrag.type = 'penv';
+          envDrag.idx = idx;
+        }
+      };
+
+      canvas.onmousemove = canvas.ontouchmove = (e) => {
+        e.preventDefault();
+        if (!envDrag.active || envDrag.type !== 'penv') return;
+
+        const {x, y} = getXY(e);
+        const idx = envDrag.idx;
+        const subW = KS / 4;
+
+        // Y → level (inverted: up=agudo=low value)
+        const relY = Math.max(0, Math.min(IH, y - PAD.t));
+        const newL = Math.max(0, Math.min(100, Math.round((1 - relY / IH) * 100)));
+
+        // Level mapping: [0]=L0, [1]=L1, [2]=L2, [3]=SusL, [4]=SusL, [5]=EndL
+        const lIdxMap = [0, 1, 2, 3, 3, 4];
+        const lIdx = lIdxMap[idx];
+        if (lIdx >= 0) setPenvVal(PENV_KEYS.levels[lIdx], newL, PENV_KEYS.lOffsets[lIdx]);
+
+        // X → time: [1]=T1(z0), [2]=T2(z1), [3]=T3(z2), [4]=T4(z3)
+        const xTMap = { 1:[0,0], 2:[1,1], 3:[2,2], 4:[3,3] };
+        if (xTMap[idx]) {
+          const [tIdx, zoneIdx] = xTMap[idx];
+          const zoneStart = PAD.l + subW * zoneIdx * IW;
+          const zoneWidth = subW * IW;
+          const localX = Math.max(0, Math.min(zoneWidth, x - zoneStart));
+          const newT = Math.round((localX / zoneWidth) * T_MAX);
+          setPenvVal(PENV_KEYS.times[tIdx], Math.max(0, Math.min(100, newT)), PENV_KEYS.tOffsets[tIdx]);
+        }
+
+        penvDraw();
+      };
+
+      const stop = () => { envDrag.active = false; };
+      canvas.onmouseup = canvas.ontouchend = stop;
+      window.addEventListener('mouseup', stop);
+    }
+
+        window.addEventListener('load', () => {
+      setStructure('upper', 0);
+      setStructure('lower', 0);
+      updatePartialUI();
+      envDraw('tvf');
+      envDraw('tva');
+      envSetupDrag('tvf');
+      envSetupDrag('tva');
+      penvDraw();
+      penvSetupDrag();
+    });
+
+    // Mute state: index 0=UP1, 1=UP2, 2=LP1, 3=LP2
+    // Upper Common base: 00 01 00, offset 0x2E = Partial Mute
+    // Lower Common base: 00 02 40, offset 0x2E = Partial Mute
+    const COMMON_ADDR = [
+      [0x00, 0x01, 0x00], // Upper Common
+      [0x00, 0x02, 0x40], // Lower Common
+    ];
+    const MUTE_OFFSET = 0x2E;
+
+    function toggleMute(partialIdx) {
+      STATE.muteState[partialIdx] = !STATE.muteState[partialIdx];
+      const btn = document.getElementById('mute-btn-' + partialIdx);
+      btn.classList.toggle('muted', STATE.muteState[partialIdx]);
+
+      const commonIdx = partialIdx < 2 ? 0 : 1;
+      // En el D-50: bit activo = partial ACTIVO (no muted)
+      const p1active = STATE.muteState[commonIdx * 2]     ? 0 : 1;
+      const p2active = STATE.muteState[commonIdx * 2 + 1] ? 0 : 2;
+      const muteVal = p1active | p2active;
+
+      const base = COMMON_ADDR[commonIdx];
+      const addr = [base[0], base[1], base[2] + MUTE_OFFSET];
+      const msg = buildSysEx(addr, muteVal);
+
+      let sent = false;
+      if (selectedOutput) {
+        try { selectedOutput.send(msg); sent = true; } catch(e) {}
+      }
+      logSysEx(msg, (STATE.muteState[partialIdx] ? '🔇 mute' : '🔊 unmute') + ' partial-' + (partialIdx + 1), sent);
+    }
+    let selectedOutput = null;
+    let currentPartial = 0;
+    let logCleared = false;
+    let allSliders = [];
+
+    const ROLAND_ID = 0x41;
+    const DEVICE_ID = 0x00; // canal 1 (channel - 1)
+    const D50_MODEL  = 0x14; // D-50 model ID
+    const CMD_SEND   = 0x12;
+
+    // Direcciones base reales del D-50 (manual pág. 39)
+    // Upper Partial 1: 00 00 00, Upper Partial 2: 00 00 40
+    // Lower Partial 1: 00 01 00, Lower Partial 2: 00 01 40
+    const PARTIAL_BASE_ADDR = [
+      [0x00, 0x00, 0x00], // Upper Partial-1
+      [0x00, 0x00, 0x40], // Upper Partial-2
+      [0x00, 0x01, 0x40], // Lower Partial-1
+      [0x00, 0x02, 0x00], // Lower Partial-2
+    ];
+
+    function calcChecksum(bytes) {
+      let sum = 0;
+      for (const b of bytes) sum += b;
+      return (128 - (sum % 128)) % 128;
+    }
+
+    function buildSysEx(addr, value) {
+      const addrBytes = [...addr];
+      const dataBytes = [value];
+      const checkBytes = [...addrBytes, ...dataBytes];
+      const checksum = calcChecksum(checkBytes);
+      return [0xF0, ROLAND_ID, DEVICE_ID, D50_MODEL, CMD_SEND, ...addrBytes, ...dataBytes, checksum, 0xF7];
+    }
+
+    function toHex(b) { return b.toString(16).toUpperCase().padStart(2, '0'); }
+
+    function logSysEx(msg, paramName, sent) {
+      const log = document.getElementById('sysex-log');
+      if (!logCleared) { log.innerHTML = ''; logCleared = true; }
+      const hexStr = msg.map(toHex).join(' ');
+      const div = document.createElement('div');
+      div.className = 'sysex-entry';
+      div.innerHTML = `<span class="param-name">${paramName}</span>  <span class="bytes">${hexStr}</span><span class="${sent ? 'sent' : 'nosend'}">${sent ? '✓ enviado' : '(sin dispositivo)'}</span>`;
+      log.appendChild(div);
+      log.scrollTop = log.scrollHeight;
+    }
+
+
+    function setPortamento(on) {
+      STATE.portamentoOn = on;
+      document.getElementById('porta-off-btn').classList.toggle('active', !on);
+      document.getElementById('porta-on-btn').classList.toggle('active', on);
+      // CC#65: Portamento On/Off — value 0=off, 127=on
+      if (selectedOutput) {
+        const ch = DEVICE_ID; // use same channel
+        selectedOutput.send([0xB0 | ch, 65, on ? 127 : 0]);
+        logSysEx([0xB0 | ch, 65, on ? 127 : 0], 'portamento ' + (on ? 'ON' : 'OFF'), true);
+      }
+    }
+
+    const CHORUS_NAMES = ['Chorus 1','Chorus 2','Flanger 1','Flanger 2','Feedback Chorus','Tremolo','Chorused Tremolo','Dimension Chorus'];
+
+    function setChorusType(val) {
+      STATE.chorusType[currentTone] = val;
+      STATE.tones[currentTone]['chorus-type'] = val;
+      for (let i = 0; i < 8; i++) {
+        document.getElementById('chorus-type-' + i).classList.toggle('active', i === val);
+      }
+      document.getElementById('chorus-type-name').textContent = CHORUS_NAMES[val];
+      const base = currentTone === 'upper' ? [0x00, 0x01, 0x00] : [0x00, 0x02, 0x40];
+      const addr = [base[0], base[1], base[2] + 0x2A];
+      const msg = buildSysEx(addr, val);
+      let sent = false;
+      if (selectedOutput) {
+        try { selectedOutput.send(msg); sent = true; } catch(e) {}
+      }
+      logSysEx(msg, 'chorus-type', sent);
+    }
+
+    function onPatch(slider, valId, offset) {
+      const val = parseInt(slider.value);
+      document.getElementById(valId).textContent = val;
+      // Save to state
+      const key = valId.replace('-val', '');
+      STATE.patch[key] = val;
+      const addr = [0x00, 0x03, 0x00 + offset];
+      const msg = buildSysEx(addr, val);
+      let sent = false;
+      if (selectedOutput) {
+        try { selectedOutput.send(msg); sent = true; } catch(e) {}
+      }
+      logSysEx(msg, valId.replace('-val',''), sent);
+    }
+
+    let currentTone = 'upper';
+
+    function selectTone(tone, btn) {
+      currentTone = tone;
+      document.getElementById('tone-upper-btn').classList.toggle('active', tone === 'upper');
+      document.getElementById('tone-lower-btn').classList.toggle('active', tone === 'lower');
+      renderTone();
+    }
+
+    function onCommonTone(slider, valId, offset) {
+      const val = parseInt(slider.value);
+      document.getElementById(valId).textContent = val;
+      // Save to state
+      const key = valId.replace('-val', '');
+      STATE.tones[currentTone][key] = val;
+      const base = currentTone === 'upper' ? [0x00, 0x01, 0x00] : [0x00, 0x02, 0x40];
+      const addr = [base[0], base[1], base[2] + offset];
+      const msg = buildSysEx(addr, val);
+      let sent = false;
+      if (selectedOutput) {
+        try { selectedOutput.send(msg); sent = true; } catch(e) {}
+      }
+      logSysEx(msg, valId.replace('-val',''), sent);
+    }
+
+    // D-50 character set (from manual p.10):
+    // 0=' ', 1-26=A-Z, 27-52=a-z, 53-62=0-9, 63='-'
+    const D50_CHARS = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890-';
+
+    function charToD50(c) {
+      const idx = D50_CHARS.indexOf(c);
+      return idx >= 0 ? idx : 0; // unknown chars → space
+    }
+    function d50ToChar(val) {
+      return D50_CHARS[Math.max(0, Math.min(63, val))] || ' ';
+    }
+
+    function onToneName(input) {
+      const name = input.value.padEnd(10, ' ').substring(0, 10);
+      STATE.tones[currentTone]['tone-name'] = name;
+      const base = currentTone === 'upper' ? [0x00, 0x01, 0x00] : [0x00, 0x02, 0x40];
+      // Send each character as a separate SysEx message, offsets 0x00-0x09
+      for (let i = 0; i < 10; i++) {
+        const val = charToD50(name[i] || ' ');
+        const addr = [base[0], base[1], base[2] + i];
+        const msg = buildSysEx(addr, val);
+        if (selectedOutput) {
+          try { selectedOutput.send(msg); } catch(e) {}
+        }
+      }
+      logSysEx([], `tone-name → "${name.trimEnd()}"`, !!selectedOutput);
+    }
+
+    function onCommon(slider, valId, offset) {
+      const val = parseInt(slider.value);
+      document.getElementById(valId).textContent = val;
+      const base = currentPartial < 2 ? [0x00, 0x01, 0x00] : [0x00, 0x02, 0x40];
+      const addr = [base[0], base[1], base[2] + offset];
+      const msg = buildSysEx(addr, val);
+      let sent = false;
+      if (selectedOutput) {
+        try { selectedOutput.send(msg); sent = true; } catch(e) {}
+      }
+      logSysEx(msg, valId.replace('-val',''), sent);
+    }
+
+    function setWaveform(val) {
+      STATE.waveform[currentPartial] = val;
+      document.getElementById('wave-squ').classList.toggle('active', val === 0);
+      document.getElementById('wave-saw').classList.toggle('active', val === 1);
+      const base = PARTIAL_BASE_ADDR[currentPartial];
+      const addr = [base[0], base[1], base[2] + 0x06];
+      const msg = buildSysEx(addr, val);
+      let sent = false;
+      if (selectedOutput) {
+        try { selectedOutput.send(msg); sent = true; } catch(e) {}
+      }
+      logSysEx(msg, 'wg-waveform', sent);
+    }
+
+    function setPenvMode(val) {
+      STATE.partials[currentPartial]['wg-penvmode'] = val;
+      document.getElementById('penvmode-off').classList.toggle('active', val === 0);
+      document.getElementById('penvmode-nrm').classList.toggle('active', val === 1);
+      document.getElementById('penvmode-inv').classList.toggle('active', val === 2);
+      const base = PARTIAL_BASE_ADDR[currentPartial];
+      const addr = [base[0], base[1], base[2] + 0x04];
+      const msg = buildSysEx(addr, val);
+      let sent = false;
+      if (selectedOutput) {
+        try { selectedOutput.send(msg); sent = true; } catch(e) {}
+      }
+      logSysEx(msg, 'wg-penvmode', sent);
+    }
+
+    function onParam(slider, valId, paramOffset) {
+      const val = parseInt(slider.value);
+      document.getElementById(valId).textContent = val;
+      // Save to state
+      const key = valId.replace('-val', '');
+      STATE.partials[currentPartial][key] = val;
+      const base = PARTIAL_BASE_ADDR[currentPartial];
+      const addr = [base[0], base[1], base[2] + paramOffset];
+      const msg = buildSysEx(addr, val);
+      let sent = false;
+      if (selectedOutput) {
+        try { selectedOutput.send(msg); sent = true; } catch(e) {}
+      }
+      logSysEx(msg, valId.replace('-val',''), sent);
+    }
+
+    function selectPartial(idx, btn) {
+      currentPartial = idx;
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      renderPartial();
+    }
+
+    function clearLog() {
+      const log = document.getElementById('sysex-log');
+      log.innerHTML = '<span class="empty-log">log limpiado...</span>';
+      logCleared = false;
+    }
+
+    function savePreset() {
+      // Build a clean snapshot of STATE to save
+      const snapshot = {
+        version: 1,
+        name: STATE.tones.upper['tone-name'].trimEnd() || 'preset',
+        timestamp: new Date().toISOString(),
+        partials: STATE.partials,
+        tones: STATE.tones,
+        patch: STATE.patch,
+        muteState: STATE.muteState,
+        structureState: STATE.structureState,
+        pcmWave: STATE.pcmWave,
+        waveform: STATE.waveform,
+        chorusType: STATE.chorusType,
+        portamentoOn: STATE.portamentoOn,
+      };
+      const defaultName = (snapshot.name || 'preset').replace(/[^a-zA-Z0-9-_ ]/g, '').trim();
+      const fileName = prompt('Nombre del archivo:', defaultName);
+      if (fileName === null) return; // cancelled
+      const json = JSON.stringify(snapshot, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href     = url;
+      a.download = (fileName || defaultName).replace(/[^a-zA-Z0-9-_ ]/g, '_') + '.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      logSysEx([], '💾 preset guardado: ' + a.download, false);
+    }
+
+    function loadPreset(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const snapshot = JSON.parse(e.target.result);
+          if (!snapshot.version || !snapshot.partials) {
+            alert('Archivo de preset no válido');
+            return;
+          }
+          // Restore STATE
+          STATE.partials      = snapshot.partials;
+          STATE.tones         = snapshot.tones;
+          STATE.patch         = snapshot.patch;
+          STATE.muteState     = snapshot.muteState     || [false,false,false,false];
+          STATE.structureState= snapshot.structureState|| { upper:0, lower:0 };
+          STATE.pcmWave       = snapshot.pcmWave       || [0,0,0,0];
+          STATE.waveform      = snapshot.waveform      || [0,0,0,0];
+          STATE.chorusType    = snapshot.chorusType    || { upper:0, lower:0 };
+          STATE.portamentoOn  = snapshot.portamentoOn  || false;
+
+          // Update UI
+          renderPartial();
+          renderTone();
+          renderPatch();
+
+          // Update structure buttons
+          setStructure('upper', STATE.structureState.upper);
+          setStructure('lower', STATE.structureState.lower);
+
+          // Update mute buttons
+          STATE.muteState.forEach((muted, i) => {
+            const btn = document.getElementById('mute-btn-' + i);
+            if (btn) btn.classList.toggle('muted', muted);
+          });
+
+          // Update portamento button
+          document.getElementById('porta-off-btn').classList.toggle('active', !STATE.portamentoOn);
+          document.getElementById('porta-on-btn').classList.toggle('active',  STATE.portamentoOn);
+
+          logSysEx([], '📂 preset cargado: ' + file.name, false);
+
+          // Send to D-50 if connected
+          if (selectedOutput) {
+            sendAllParams();
+          }
+        } catch(err) {
+          alert('Error al cargar el preset: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+      // Reset input so same file can be loaded again
+      event.target.value = '';
+    }
+
+    function sendAllParams() {
+      if (!selectedOutput) { alert('Conecta el MIDI primero'); return; }
+
+      function send(addr, val) {
+        const msg = buildSysEx(addr, val);
+        selectedOutput.send(msg);
+      }
+
+      // Send all 4 partials
+      PARTIAL_BASE_ADDR.forEach((base, pi) => {
+        const p = STATE.partials[pi];
+        Object.entries(PARTIAL_MAP).forEach(([offset, key]) => {
+          if (p[key] !== undefined)
+            send([base[0], base[1], base[2] + parseInt(offset)], p[key]);
+        });
+        // Waveform and PCM wave
+        send([base[0], base[1], base[2] + 0x06], STATE.waveform[pi]);
+        send([base[0], base[1], base[2] + 0x07], STATE.pcmWave[pi]);
+      });
+
+      // Send Upper and Lower Common
+      [['upper', [0x00, 0x01, 0x00]], ['lower', [0x00, 0x02, 0x40]]].forEach(([toneKey, base]) => {
+        const t = STATE.tones[toneKey];
+        // Send tone name
+        const name = (t['tone-name'] || '          ').padEnd(10, ' ');
+        for (let i = 0; i < 10; i++) {
+          send([base[0], base[1], base[2] + i], charToD50(name[i]));
+        }
+        Object.entries(COMMON_MAP).forEach(([offset, key]) => {
+          if (t[key] !== undefined)
+            send([base[0], base[1], base[2] + parseInt(offset)], t[key]);
+        });
+        // Chorus type
+        send([base[0], base[1], base[2] + 0x2A], STATE.chorusType[toneKey]);
+        // Structure
+        send([base[0], base[1], base[2] + 0x0A], STATE.structureState[toneKey]);
+        // Mute
+        const bi = toneKey === 'upper' ? 0 : 2;
+        const muteVal = (STATE.muteState[bi] ? 0 : 1) | (STATE.muteState[bi+1] ? 0 : 2);
+        send([base[0], base[1], base[2] + 0x2E], muteVal);
+      });
+
+      // Send Patch
+      Object.entries(PATCH_MAP).forEach(([offset, key]) => {
+        if (STATE.patch[key] !== undefined)
+          send([0x00, 0x03, parseInt(offset)], STATE.patch[key]);
+      });
+
+      logSysEx([], '✓ todos los parámetros enviados', true);
+    }
+
+    let selectedInput = null;
+    let sysexBuffer = [];
+    let receivingDump = false;
+
+    function setupInput(inputs) {
+      if (inputs.length === 0) return;
+      // Try to match input with same name as selected output
+      const prevName = selectedOutput ? selectedOutput.name : null;
+      const idx = prevName ? inputs.findIndex(i => i.name === prevName) : 0;
+      selectedInput = inputs[Math.max(0, idx)];
+      selectedInput.onmidimessage = onMidiMessage;
+    }
+
+    function onMidiMessage(event) {
+      const data = event.data;
+      // Only care about SysEx
+      if (data[0] !== 0xF0) return;
+      // Check it's from Roland D-50
+      if (data[1] !== 0x41 || data[3] !== 0x14) return;
+      // DT1 command = 0x12
+      if (data[4] !== 0x12) return;
+      parseDT1(data);
+    }
+
+    // Partial parameter map: offset → STATE key
+    const PARTIAL_MAP = {
+      0x00: 'wg-coarse', 0x01: 'wg-fine', 0x02: 'wg-kf',
+      0x03: 'wg-lfomode', 0x04: 'wg-penvmode', 0x05: 'wg-bendmode',
+      0x06: 'wg-wave', 0x07: 'pcm-wave', 0x08: 'wg-pw',
+      0x09: 'wg-pwvelo', 0x0A: 'wg-pwlfos', 0x0B: 'wg-pwlfod', 0x0C: 'wg-pwafter',
+      0x0D: 'tvf-cutoff', 0x0E: 'tvf-res', 0x0F: 'tvf-kf',
+      0x10: 'tvf-biasp', 0x11: 'tvf-biasl',
+      0x12: 'tvf-envd', 0x13: 'tvf-velr', 0x14: 'tvf-dkf', 0x15: 'tvf-tkf',
+      0x16: 'tvf-t1', 0x17: 'tvf-t2', 0x18: 'tvf-t3', 0x19: 'tvf-t4', 0x1A: 'tvf-t5',
+      0x1B: 'tvf-l1', 0x1C: 'tvf-l2', 0x1D: 'tvf-l3',
+      0x1E: 'tvf-susl', 0x1F: 'tvf-endl',
+      0x20: 'tvf-lfos', 0x21: 'tvf-lfod', 0x22: 'tvf-after',
+      0x23: 'tva-level', 0x24: 'tva-velo', 0x25: 'tva-biasp', 0x26: 'tva-biasl',
+      0x27: 'tva-t1', 0x28: 'tva-t2', 0x29: 'tva-t3', 0x2A: 'tva-t4', 0x2B: 'tva-t5',
+      0x2C: 'tva-l1', 0x2D: 'tva-l2', 0x2E: 'tva-l3',
+      0x2F: 'tva-susl', 0x30: 'tva-endl',
+      0x31: 'tva-velof', 0x32: 'tva-tkf',
+      0x33: 'tva-lfos', 0x34: 'tva-lfod', 0x35: 'tva-after',
+    };
+
+    // Common (tone) parameter map: offset → STATE key
+    const COMMON_MAP = {
+      0x0B: 'penv-velo', 0x0C: 'penv-tkf',
+      0x0D: 'penv-t1', 0x0E: 'penv-t2', 0x0F: 'penv-t3', 0x10: 'penv-t4',
+      0x11: 'penv-l0', 0x12: 'penv-l1', 0x13: 'penv-l2',
+      0x14: 'penv-susl', 0x15: 'penv-endl',
+      0x16: 'pitchmod-lfod', 0x17: 'pitchmod-lever', 0x18: 'pitchmod-after',
+      0x19: 'lfo1-wave', 0x1A: 'lfo1-rate', 0x1B: 'lfo1-delay', 0x1C: 'lfo1-sync',
+      0x1D: 'lfo2-wave', 0x1E: 'lfo2-rate', 0x1F: 'lfo2-delay', 0x20: 'lfo2-sync',
+      0x21: 'lfo3-wave', 0x22: 'lfo3-rate', 0x23: 'lfo3-delay', 0x24: 'lfo3-sync',
+      0x25: 'loweq-freq', 0x26: 'loweq-gain',
+      0x27: 'higheq-freq', 0x28: 'higheq-q', 0x29: 'higheq-gain',
+      0x2A: 'chorus-type', 0x2B: 'chorus-rate', 0x2C: 'chorus-depth', 0x2D: 'chorus-bal',
+    };
+
+    // Patch parameter map: offset → STATE key
+    const PATCH_MAP = {
+      0x12: 'patch-keymode', 0x13: 'patch-split',
+      0x14: 'patch-portamode', 0x15: 'patch-hold',
+      0x16: 'patch-uks', 0x17: 'patch-uft', 0x18: 'patch-lks', 0x19: 'patch-lft',
+      0x1A: 'patch-bend', 0x1B: 'patch-afterbend',
+      0x1C: 'patch-portatime',
+      0x1D: 'patch-outmode', 0x1E: 'patch-revtype', 0x1F: 'patch-revbal',
+      0x20: 'patch-vol', 0x21: 'patch-tonebal',
+      0x22: 'patch-chasemode', 0x23: 'patch-chaselevel', 0x24: 'patch-chasetime',
+    };
+
+    function parseDT1(data) {
+      // data: F0 41 DEV 14 12 aa bb cc [data...] sum F7
+      const addrH = data[5];
+      const addrM = data[6];
+      const addrL = data[7];
+      const payload = data.slice(8, data.length - 2); // strip checksum + F7
+
+      // Data comes as-is (not nibblized)
+      const data2 = payload;
+
+      // Debug log
+      const hexAddr = [addrH, addrM, addrL].map(b => b.toString(16).padStart(2,'0').toUpperCase()).join(' ');
+      console.log(`DT1 addr=${hexAddr} len=${data2.length}`, data2.map(b => b.toString(16).padStart(2,'0').toUpperCase()).join(' '));
+      logSysEx([], `← DT1 addr=${hexAddr} bytes=${data2.length} | str[0x0A]=${data2[0x0A]}`, false);
+
+      const BLOCK_SIZE = 64;
+
+      function parsePartialBlock(bytes, partialIdx) {
+        bytes.forEach((val, i) => {
+          const key = PARTIAL_MAP[i];
+          if (key !== undefined) STATE.partials[partialIdx][key] = val;
+        });
+        STATE.waveform[partialIdx] = bytes[0x06] !== undefined ? bytes[0x06] : 0;
+        STATE.pcmWave[partialIdx]  = bytes[0x07] !== undefined ? bytes[0x07] : 0;
+      }
+
+      function parseCommonBlock(bytes, toneKey) {
+        // Parse tone name (offsets 0x00-0x09)
+        let name = '';
+        for (let i = 0; i < 10; i++) {
+          name += bytes[i] !== undefined ? d50ToChar(bytes[i]) : ' ';
+        }
+        STATE.tones[toneKey]['tone-name'] = name;
+
+        bytes.forEach((val, i) => {
+          const key = COMMON_MAP[i];
+          if (key !== undefined) STATE.tones[toneKey][key] = val;
+        });
+        if (bytes[0x2A] !== undefined) STATE.chorusType[toneKey] = bytes[0x2A];
+        if (bytes[0x0A] !== undefined) {
+          STATE.structureState[toneKey] = bytes[0x0A];
+          setStructure(toneKey, bytes[0x0A]);
+        }
+        if (bytes[0x2E] !== undefined) {
+          const muteVal = bytes[0x2E];
+          const base = toneKey === 'upper' ? 0 : 2;
+          STATE.muteState[base]     = !(muteVal & 1);
+          STATE.muteState[base + 1] = !(muteVal & 2);
+          document.getElementById('mute-btn-' + base).classList.toggle('muted', STATE.muteState[base]);
+          document.getElementById('mute-btn-' + (base+1)).classList.toggle('muted', STATE.muteState[base+1]);
+        }
+      }
+
+      function parsePatchBlock(bytes) {
+        bytes.forEach((val, i) => {
+          const key = PATCH_MAP[i];
+          if (key !== undefined) STATE.patch[key] = val;
+        });
+      }
+
+      // D-50 memory layout (temp area):
+      // 00 00 00: UP1  (64 bytes)
+      // 00 00 40: UP2  (64 bytes)
+      // 00 01 00: Upper Common (64 bytes)
+      // 00 01 40: LP1  (64 bytes)
+      // 00 02 00: LP2  (64 bytes)
+      // 00 02 40: Lower Common (64 bytes)
+      // 00 03 00: Patch (64 bytes)
+      //
+      // D-50 sends in chunks of max 256 bytes:
+      // Chunk 1: addr=00 00 00, 256 bytes = UP1+UP2+Upper Common+LP1
+      // Chunk 2: addr=00 02 00, 192 bytes = LP2+Lower Common+Patch
+
+      if (addrH === 0x00 && addrM === 0x00 && addrL === 0x00) {
+        // First chunk: UP1, UP2, Upper Common, LP1 (and maybe more)
+        if (data2.length >= 1 * BLOCK_SIZE) parsePartialBlock(data2.slice(0, BLOCK_SIZE), 0);
+        if (data2.length >= 2 * BLOCK_SIZE) parsePartialBlock(data2.slice(1*BLOCK_SIZE, 2*BLOCK_SIZE), 1);
+        if (data2.length >= 3 * BLOCK_SIZE) parseCommonBlock (data2.slice(2*BLOCK_SIZE, 3*BLOCK_SIZE), 'upper');
+        if (data2.length >= 4 * BLOCK_SIZE) parsePartialBlock(data2.slice(3*BLOCK_SIZE, 4*BLOCK_SIZE), 2);
+        if (data2.length >= 5 * BLOCK_SIZE) parsePartialBlock(data2.slice(4*BLOCK_SIZE, 5*BLOCK_SIZE), 3);
+        if (data2.length >= 6 * BLOCK_SIZE) parseCommonBlock (data2.slice(5*BLOCK_SIZE, 6*BLOCK_SIZE), 'lower');
+        if (data2.length >= 7 * BLOCK_SIZE) parsePatchBlock  (data2.slice(6*BLOCK_SIZE, 7*BLOCK_SIZE));
+      } else if (addrH === 0x00 && addrM === 0x02 && addrL === 0x00) {
+        // Second chunk: LP2, Lower Common, Patch
+        if (data2.length >= 1 * BLOCK_SIZE) parsePartialBlock(data2.slice(0, BLOCK_SIZE), 3);
+        if (data2.length >= 2 * BLOCK_SIZE) parseCommonBlock (data2.slice(1*BLOCK_SIZE, 2*BLOCK_SIZE), 'lower');
+        if (data2.length >= 3 * BLOCK_SIZE) parsePatchBlock  (data2.slice(2*BLOCK_SIZE, 3*BLOCK_SIZE));
+      } else {
+        // Individual blocks (fallback)
+        if      (addrH===0x00 && addrM===0x00 && addrL===0x40) parsePartialBlock(data2, 1);
+        else if (addrH===0x00 && addrM===0x01 && addrL===0x00) parseCommonBlock(data2, 'upper');
+        else if (addrH===0x00 && addrM===0x01 && addrL===0x40) parsePartialBlock(data2, 2);
+        else if (addrH===0x00 && addrM===0x02 && addrL===0x40) parseCommonBlock(data2, 'lower');
+        else if (addrH===0x00 && addrM===0x03 && addrL===0x00) parsePatchBlock(data2);
+      }
+
+      // Always render everything after a dump
+      renderPartial();
+      renderTone();
+      renderPatch();
+
+      const status = document.getElementById('read-status');
+      if (status) status.textContent = '✓ datos recibidos';
+      setTimeout(() => { if (status) status.textContent = ''; }, 2000);
+    }
+
+    function renderPatch() {
+      const p = STATE.patch;
+      for (const [key, val] of Object.entries(p)) {
+        const slider = document.querySelector(`input[oninput*="'${key}-val'"]`);
+        const label  = document.getElementById(`${key}-val`);
+        if (slider) slider.value = val;
+        if (label)  label.textContent = val;
+      }
+    }
+
+    function requestDump() {
+      if (!selectedOutput) {
+        alert('Conecta el MIDI primero');
+        return;
+      }
+      const status = document.getElementById('read-status');
+      if (status) status.textContent = 'solicitando datos...';
+
+      // RQ1: request full temp area 00 00 00, size 03 40 (448 bytes)
+      // F0 41 DEV 14 11 00 00 00 00 03 40 sum F7
+      const addr = [0x00, 0x00, 0x00];
+      const size = [0x00, 0x03, 0x40];
+      const sumBytes = [...addr, ...size];
+      let sum = 0;
+      for (const b of sumBytes) sum += b;
+      const checksum = (128 - (sum % 128)) % 128;
+      const rq1 = [0xF0, 0x41, DEVICE_ID, 0x14, 0x11, ...addr, ...size, checksum, 0xF7];
+      selectedOutput.send(rq1);
+      logSysEx(rq1, 'RQ1 — solicitar dump', true);
+    }
+
+    function populateOutputs(outputs) {
+      const sel = document.getElementById('device-select');
+      const label = document.getElementById('midi-label');
+      // Guardar nombre del dispositivo actualmente seleccionado
+      const prevName = selectedOutput ? selectedOutput.name : null;
+      sel.innerHTML = '';
+      if (outputs.length === 0) {
+        sel.innerHTML = '<option value="">– no hay dispositivos –</option>';
+        selectedOutput = null;
+        label.textContent = 'conectado (sin dispositivos)';
+        return;
+      }
+      outputs.forEach((out, i) => {
+        const opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = out.name;
+        sel.appendChild(opt);
+      });
+      // Restaurar selección por nombre si existe, si no el primero
+      const prevIdx = outputs.findIndex(o => o.name === prevName);
+      const idx = prevIdx >= 0 ? prevIdx : 0;
+      sel.value = idx;
+      selectedOutput = outputs[idx];
+      label.textContent = 'midi conectado · ' + selectedOutput.name;
+      sel.onchange = () => {
+        selectedOutput = outputs[parseInt(sel.value)];
+        label.textContent = 'midi conectado · ' + selectedOutput.name;
+        // Also update input
+        const inputs = [...midiAccess.inputs.values()];
+        setupInput(inputs);
+      };
+    }
+
+    async function connectMIDI() {
+      const dot = document.getElementById('dot');
+      const label = document.getElementById('midi-label');
+      label.textContent = 'conectando...';
+      try {
+        midiAccess = await navigator.requestMIDIAccess({ sysex: true });
+        dot.className = 'dot connected';
+        populateOutputs([...midiAccess.outputs.values()]);
+        setupInput([...midiAccess.inputs.values()]);
+        midiAccess.onstatechange = () => {
+          populateOutputs([...midiAccess.outputs.values()]);
+          setupInput([...midiAccess.inputs.values()]);
+        };
+      } catch(e) {
+        dot.className = 'dot error';
+        label.textContent = 'acceso denegado';
+      }
+    }
+  </script>
+</body>
+</html>
